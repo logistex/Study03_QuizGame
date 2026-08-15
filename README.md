@@ -53,6 +53,7 @@ archive/     개정 전 판본
 | [08 1단계 검토 의견서](history/08-stage1-review.md) | 조치 7건 |
 | [09 저장소 정리](history/09-repo-reorg.md) | 폴더 구조와 문서명 정리 계획, 실행 결과 |
 | [10 1단계 검토 회신](history/10-stage1-review-reply.md) | 조치 5건 반영, 1건 미반영, 정정 1건 |
+| [11 1단계 검토 2차 의견](history/11-stage1-review-round2.md) | 반영 실측 확인, 정정 수용, 근거 교체 권고 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
