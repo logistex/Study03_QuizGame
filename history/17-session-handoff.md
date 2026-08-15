@@ -71,11 +71,28 @@
 
 ### 미리보기 서버
 
-`.claude/launch.json`에 `python3 -m http.server`가 있다. gitignore 대상이다.
+`.claude/`에 `serve.py`와 `launch.json`이 있다. 둘 다 gitignore 대상이라 새 세션에는 없다. **없으면 아래 파일을 다시 만들고 `launch.json`이 이것을 띄우게 한다.**
 
-**브라우저가 `script.js`를 캐시해 새 코드가 실행되지 않는 일이 매 단계 생겼다.** 강제 새로고침과 새 탭으로 안 풀린다. **포트를 바꾸는 것이 유일하게 통한 방법이다.** 현재 8767이고 다음 단계는 8768로 시작하면 된다.
+```python
+# .claude/serve.py
+import http.server
 
-파이썬 서버가 캐시 지시를 보내지 않아 브라우저가 추정 캐싱을 하는 것이다. 배포 후 사용자 문제와는 성격이 다르다.
+
+class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Cache-Control', 'no-store')
+        super().end_headers()
+
+
+if __name__ == '__main__':
+    http.server.test(HandlerClass=NoCacheHandler, port=8010, bind='127.0.0.1')
+```
+
+**브라우저가 `script.js`를 캐시해 새 코드가 실행되지 않는 일이 3단계까지 매번 생겼다.** 원인은 `python3 -m http.server`가 `Cache-Control`을 보내지 않고 `Last-Modified`만 보내는 것이다. 그래서 브라우저가 신선도를 스스로 추정해 캐싱한다. 강제 새로고침과 새 탭으로는 안 풀렸고 포트를 바꾸는 것만 통했는데, 새 오리진에 캐시 항목이 없어서였다.
+
+`no-store`를 붙이면 원인 자리에서 막힌다. **포트를 바꿔 가며 개발하지 않는다.** 포트가 바뀌면 오리진이 달라져 `localStorage`가 분리되고, 4단계부터는 순위 기록이 사라진 것처럼 보인다.
+
+포트는 **8010**이다. PRD 4.1절은 8000으로 적었으나 다른 작업이 그 포트를 쓰고 있어 비켜 두었다. 8000이 비면 되돌려도 된다. 중요한 것은 값이 아니라 **고정**이다.
 
 ### 노션 노트
 

@@ -119,12 +119,18 @@ function showDataError() {
  * 네 화면 전체를 감추고 대상만 드러낸 뒤 그 화면의 제목으로 초점을 옮긴다.
  * visibility나 투명도를 쓰지 않는다. hidden이라야 감춘 화면이
  * 스크린리더와 탭 순서에서 빠진다(PRD 3.0절).
+ *
+ * moveFocus에 false를 넘기면 초점을 옮기지 않는다. 퀴즈 화면은 진입 직후
+ * renderQuestion이 문제 텍스트로 초점을 잡으므로, 제목을 거치면 초점이
+ * 두 번 움직여 스크린리더가 제목을 읽다 끊긴다(PRD 4.3절).
  */
-function showScreen(screenId) {
+function showScreen(screenId, moveFocus) {
   document.querySelectorAll('.screen').forEach(function (section) {
     section.hidden = section.id !== screenId;
   });
-  document.querySelector('#' + screenId + ' .title').focus();
+  if (moveFocus !== false) {
+    document.querySelector('#' + screenId + ' .title').focus();
+  }
 }
 
 /** CATEGORIES를 돌며 카드 버튼을 그린다. 문제 수는 QUIZ_LENGTH에서 조립한다. */
@@ -256,7 +262,8 @@ function startGame(mode, categoryId) {
   state.index = 0;
   state.score = 0;
 
-  showScreen('screen-quiz');
+  // 초점은 renderQuestion이 문제 텍스트로 잡는다. 제목을 거치지 않는다(PRD 4.3절).
+  showScreen('screen-quiz', false);
   renderQuestion();
   enableUnloadGuard();
 }

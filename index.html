@@ -44,7 +44,8 @@
 
       <p class="question" id="question-text" tabindex="-1"></p>
       <div class="options" id="options"></div>
-      <div class="feedback" id="feedback" tabindex="-1" hidden></div>
+      <!-- 이름이 없으면 초점이 와도 구현에 따라 낭독을 잃는다. aria-live는 주지 않는다(R5). -->
+      <div class="feedback" id="feedback" tabindex="-1" aria-label="채점 결과" hidden></div>
       <button type="button" class="btn btn-primary" id="btn-next" hidden>다음 문제</button>
     </section>
 
