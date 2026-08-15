@@ -47,7 +47,7 @@ archive/     개정 전 판본
 | [02 재검토](history/02-plan-review-round2.md) | 회신에 대한 검토 측 재검토 |
 | [03 최종 회신](history/03-plan-review-reply.md) | 합의와 정정 정리 |
 | [04 경과 요약](history/04-plan-review-summary.md) | 1차 검토부터 최종 합의까지 |
-| [05 계획서 개선점](history/05-plan-diff-report.md) | 반영 전후 대조 ([요약](history/05b-plan-diff-summary.md)) |
+| [05 계획서 개선점](history/05-plan-diff-report.md) | 반영 전후 대조 |
 | [06 1단계 작업 보고](history/06-stage1-report.md) | 검증 결과와 계획 이탈 |
 | [07 1단계 검토 요청](history/07-stage1-review-request.md) | 무엇을 봐 달라고 했는가 |
 | [08 1단계 검토 의견서](history/08-stage1-review.md) | 조치 7건 |
