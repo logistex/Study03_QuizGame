@@ -2,7 +2,7 @@
 
 # Study03_QuizGame
 
-> [PRD-v2.md](PRD-v2.md) 시점의 README다. 현재 문서는 [README.md](README.md)를 볼 것.
+> [PRD-v2.md](PRD-v2.md) 시점의 README다. 현재 문서는 [README.md](../README.md)를 볼 것.
 
 브라우저에서 바로 실행되는 상식 퀴즈 게임이다. 이름을 입력하고 카테고리를 골라 4지선다 문제를 풀면, 답을 고르는 즉시 정답 여부와 해설이 나온다. 한 판이 끝나면 점수가 순위표에 남는다.
 
