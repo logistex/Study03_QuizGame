@@ -16,7 +16,10 @@ const ALL_KEY = 'all';
 const state = {
   playerName: '',
   mode: null,
-  categoryId: null
+  categoryId: null,
+  quiz: [],
+  index: 0,
+  score: 0
 };
 
 /**
@@ -178,10 +181,68 @@ function clearNameError() {
   document.getElementById('name-error').textContent = '';
 }
 
+/** Fisher-Yates로 섞은 새 배열을 돌려준다. 원본은 건드리지 않는다. */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /**
- * 2단계에서는 스텁이다. 이름 검증을 통과하면 상태를 채우고 화면만 넘긴다.
- * 3단계에서 문제 뽑기와 renderQuestion(), 이탈 경고를 잇는다.
+ * 선택지를 섞고 정답 텍스트의 새 자리로 answer를 갱신한 새 객체를 만든다.
+ * 갱신을 빠뜨려도 화면은 정상으로 보이고 채점만 조용히 틀린다.
+ * 원본을 제자리에서 섞으면 다음 판의 데이터까지 오염되므로 새 배열을 만든다.
  */
+function prepareQuestion(q, category) {
+  const answerText = q.options[q.answer];
+  const options = shuffle(q.options);
+
+  return {
+    id: q.id,
+    question: q.question,
+    options: options,
+    answer: options.indexOf(answerText),
+    difficulty: q.difficulty,
+    explanation: q.explanation,
+    categoryName: category.name
+  };
+}
+
+/** 고른 카테고리에서 QUIZ_LENGTH문제를 뽑는다. */
+function pickCategoryQuiz(categoryId) {
+  const category = CATEGORIES.find(function (c) {
+    return c.id === categoryId;
+  });
+
+  return shuffle(QUESTIONS[categoryId])
+    .slice(0, QUIZ_LENGTH)
+    .map(function (q) {
+      return prepareQuestion(q, category);
+    });
+}
+
+/**
+ * 카테고리 순서를 섞어 3, 3, 2, 2문제를 뽑고 합친 결과를 다시 섞는다.
+ * 마지막 셔플을 빠뜨리면 카테고리 순서대로 출제된다. 뽑기와 최종 순서 섞기는 별개다.
+ */
+function pickAllQuiz() {
+  const picked = [];
+
+  shuffle(CATEGORIES).forEach(function (category, i) {
+    shuffle(QUESTIONS[category.id])
+      .slice(0, ALL_COUNTS[i])
+      .forEach(function (q) {
+        picked.push(prepareQuestion(q, category));
+      });
+  });
+
+  return shuffle(picked);
+}
+
+/** 이름 검증을 통과하면 판을 시작한다. */
 function startGame(mode, categoryId) {
   const name = readPlayerName();
   if (name === null) {
@@ -191,8 +252,154 @@ function startGame(mode, categoryId) {
   state.playerName = name;
   state.mode = mode;
   state.categoryId = categoryId;
+  state.quiz = mode === 'all' ? pickAllQuiz() : pickCategoryQuiz(categoryId);
+  state.index = 0;
+  state.score = 0;
 
   showScreen('screen-quiz');
+  renderQuestion();
+  enableUnloadGuard();
+}
+
+/** 현재 문제를 그린다. 피드백과 "다음 문제"는 감추고 문제 텍스트로 초점을 옮긴다. */
+function renderQuestion() {
+  const question = state.quiz[state.index];
+
+  document.getElementById('quiz-progress').textContent =
+    (state.index + 1) + ' / ' + QUIZ_LENGTH + ' 문제';
+  document.getElementById('quiz-score').textContent =
+    '점수 ' + state.score + ' / ' + QUIZ_LENGTH;
+  document.getElementById('quiz-category').textContent = question.categoryName;
+
+  const badge = document.getElementById('quiz-difficulty');
+  badge.textContent = DIFFICULTY_LABELS[question.difficulty];
+  badge.className = 'badge diff-' + question.difficulty;
+
+  document.getElementById('question-text').textContent = question.question;
+
+  const container = document.getElementById('options');
+  container.textContent = '';
+  question.options.forEach(function (option, index) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'option';
+    button.textContent = option;
+    button.addEventListener('click', function () {
+      handleAnswer(index);
+    });
+    container.appendChild(button);
+  });
+
+  const feedback = document.getElementById('feedback');
+  feedback.textContent = '';
+  feedback.hidden = true;
+  document.getElementById('btn-next').hidden = true;
+
+  document.getElementById('question-text').focus();
+}
+
+/**
+ * 채점하고 강조와 해설을 표시한다.
+ * 맨 앞에 "이미 답했는가" 가드를 두지 않는다. 재선택은 disabled가 막는다.
+ */
+function handleAnswer(choiceIndex) {
+  const question = state.quiz[state.index];
+  const buttons = Array.from(document.querySelectorAll('#options .option'));
+  const isCorrect = choiceIndex === question.answer;
+
+  if (isCorrect) {
+    state.score += 1;
+    document.getElementById('quiz-score').textContent =
+      '점수 ' + state.score + ' / ' + QUIZ_LENGTH;
+  }
+
+  buttons.forEach(function (button) {
+    button.disabled = true;
+  });
+
+  // 색만으로 구분하지 않는다. 기호를 함께 붙인다.
+  buttons[question.answer].classList.add('option-correct');
+  buttons[question.answer].textContent = question.options[question.answer] + ' ✓';
+
+  if (!isCorrect) {
+    buttons[choiceIndex].classList.add('option-wrong');
+    buttons[choiceIndex].textContent = question.options[choiceIndex] + ' ✗';
+  }
+
+  const feedback = document.getElementById('feedback');
+  feedback.textContent = '';
+
+  const verdict = document.createElement('p');
+  verdict.className = 'feedback-verdict';
+  verdict.textContent = isCorrect
+    ? '정답입니다.'
+    : '오답입니다. 정답은 ' + question.options[question.answer] + '입니다.';
+
+  const explanation = document.createElement('p');
+  explanation.className = 'feedback-explanation';
+  explanation.textContent = question.explanation;
+
+  feedback.appendChild(verdict);
+  feedback.appendChild(explanation);
+  feedback.hidden = false;
+  feedback.focus();
+
+  const next = document.getElementById('btn-next');
+  next.textContent = state.index === QUIZ_LENGTH - 1 ? '결과 보기' : '다음 문제';
+  next.hidden = false;
+  // 해설이 펼쳐지면 모바일에서 버튼이 화면 밖으로 밀린다. 눌러야 넘어가는 구조라
+  // 그대로 두면 게임이 멈춘 것처럼 보인다.
+  next.scrollIntoView({ block: 'end' });
+}
+
+/** 다음 문제로 넘어간다. 마지막이면 결과 화면으로 간다. */
+function goNext() {
+  // 즉시 감춰 연타로 문제를 건너뛰는 것을 막는다.
+  document.getElementById('btn-next').hidden = true;
+
+  state.index += 1;
+  if (state.index >= QUIZ_LENGTH) {
+    finishGame();
+    return;
+  }
+
+  renderQuestion();
+  // 앞 문제에서 내려간 위치를 그대로 두면 다음 문제가 중간부터 보인다.
+  document.getElementById('screen-quiz').scrollIntoView({ block: 'start' });
+}
+
+/** 확인창을 띄우고 확인하면 기록을 남기지 않은 채 시작 화면으로 돌아간다. */
+function quitGame() {
+  if (!confirm('진행 중인 게임을 그만두시겠습니까? 기록은 남지 않습니다.')) {
+    return;
+  }
+
+  disableUnloadGuard();
+  showScreen('screen-start');
+}
+
+/**
+ * 이탈 경고. 등록은 판을 시작할 때, 해제는 결과 화면 진입과 그만두기 확인 두 곳뿐이다.
+ * 확인창 문구는 지정할 수 없다. 모든 최신 브라우저가 커스텀 메시지를 무시한다.
+ * Safari는 beforeunload를 지원하지 않아 동작하지 않는다(PRD 4.1절).
+ */
+function handleBeforeUnload(event) {
+  event.preventDefault();
+  event.returnValue = '';
+}
+
+function enableUnloadGuard() {
+  window.addEventListener('beforeunload', handleBeforeUnload);
+}
+
+function disableUnloadGuard() {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+}
+
+/** 3단계에서는 스텁이다. 4단계에서 점수, 정답률, 순위 저장을 잇는다. */
+function finishGame() {
+  disableUnloadGuard();
+  showScreen('screen-result');
 }
 
 /** 페이지 로드 시 한 번 실행한다. 검사를 통과해야 그 뒤 초기화가 이어진다. */
@@ -225,6 +432,9 @@ function init() {
   document.getElementById('btn-close-ranking').addEventListener('click', function () {
     showScreen('screen-start');
   });
+
+  document.getElementById('btn-quit').addEventListener('click', quitGame);
+  document.getElementById('btn-next').addEventListener('click', goNext);
 }
 
 document.addEventListener('DOMContentLoaded', init);
