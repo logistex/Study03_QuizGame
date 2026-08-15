@@ -10,6 +10,16 @@ const STORAGE_KEY = 'quizGameRankings';
 const ALL_KEY = 'all';
 
 /**
+ * 게임 상태. 3단계에서 quiz, index, score가 더해진다.
+ * "이미 답했는가" 플래그는 두지 않는다. 재선택은 선택지 버튼의 disabled가 막는다.
+ */
+const state = {
+  playerName: '',
+  mode: null,
+  categoryId: null
+};
+
+/**
  * 문제 데이터를 검사해 위반 내용을 문자열 배열로 돌려준다.
  * 위반이 없으면 빈 배열이다. 화면에는 일반 문구만 띄우고,
  * 어느 문제가 어떻게 틀렸는지는 이 배열을 콘솔에 출력해 알린다.
@@ -102,6 +112,89 @@ function showDataError() {
   document.getElementById('data-error').hidden = false;
 }
 
+/**
+ * 네 화면 전체를 감추고 대상만 드러낸 뒤 그 화면의 제목으로 초점을 옮긴다.
+ * visibility나 투명도를 쓰지 않는다. hidden이라야 감춘 화면이
+ * 스크린리더와 탭 순서에서 빠진다(PRD 3.0절).
+ */
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(function (section) {
+    section.hidden = section.id !== screenId;
+  });
+  document.querySelector('#' + screenId + ' .title').focus();
+}
+
+/** CATEGORIES를 돌며 카드 버튼을 그린다. 문제 수는 QUIZ_LENGTH에서 조립한다. */
+function renderCategoryCards() {
+  const container = document.getElementById('category-cards');
+  container.textContent = '';
+
+  CATEGORIES.forEach(function (category) {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'card';
+
+    const name = document.createElement('span');
+    name.className = 'card-name';
+    name.textContent = category.name;
+
+    const count = document.createElement('span');
+    count.className = 'card-count';
+    count.textContent = QUIZ_LENGTH + '문제';
+
+    card.appendChild(name);
+    card.appendChild(count);
+    card.addEventListener('click', function () {
+      startGame('category', category.id);
+    });
+    container.appendChild(card);
+  });
+}
+
+/**
+ * 입력란의 이름을 앞뒤 공백을 잘라 돌려준다.
+ * 비었거나 12자를 넘으면 안내를 띄우고 null을 돌려준다.
+ * 조용히 잘라 내지 않는다. 절단하면 순위표에 본인이 입력한 적 없는 이름이 남는다.
+ */
+function readPlayerName() {
+  const name = document.getElementById('player-name').value.trim();
+  const error = document.getElementById('name-error');
+
+  if (name === '') {
+    error.textContent = '이름을 입력해 주세요.';
+    return null;
+  }
+  if (name.length > 12) {
+    error.textContent = '이름은 12자까지 입력할 수 있습니다.';
+    return null;
+  }
+
+  error.textContent = '';
+  return name;
+}
+
+/** 이름 안내 문구를 지운다. 입력란의 input 이벤트에 건다. */
+function clearNameError() {
+  document.getElementById('name-error').textContent = '';
+}
+
+/**
+ * 2단계에서는 스텁이다. 이름 검증을 통과하면 상태를 채우고 화면만 넘긴다.
+ * 3단계에서 문제 뽑기와 renderQuestion(), 이탈 경고를 잇는다.
+ */
+function startGame(mode, categoryId) {
+  const name = readPlayerName();
+  if (name === null) {
+    return;
+  }
+
+  state.playerName = name;
+  state.mode = mode;
+  state.categoryId = categoryId;
+
+  showScreen('screen-quiz');
+}
+
 /** 페이지 로드 시 한 번 실행한다. 검사를 통과해야 그 뒤 초기화가 이어진다. */
 function init() {
   const errors = validateData();
@@ -115,7 +208,23 @@ function init() {
     return;
   }
 
-  // 2단계에서 화면 렌더링과 이벤트 바인딩을 여기에 잇는다.
+  renderCategoryCards();
+
+  const allButton = document.getElementById('btn-all');
+  allButton.textContent = '전 범위 도전 (' + QUIZ_LENGTH + '문제)';
+  allButton.addEventListener('click', function () {
+    startGame('all', null);
+  });
+
+  document.getElementById('player-name').addEventListener('input', clearNameError);
+
+  // 순위표 화면의 내용은 4단계에서 그린다. 여기서는 열고 닫기만 한다.
+  document.getElementById('btn-open-ranking').addEventListener('click', function () {
+    showScreen('screen-ranking');
+  });
+  document.getElementById('btn-close-ranking').addEventListener('click', function () {
+    showScreen('screen-start');
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
