@@ -50,7 +50,7 @@ archive/     개정 전 판본
 | [05 계획서 개선점](history/05-plan-diff-report.md) | 반영 전후 대조 ([요약](history/05b-plan-diff-summary.md)) |
 | [06 1단계 작업 보고](history/06-stage1-report.md) | 검증 결과와 계획 이탈 |
 | [07 1단계 검토 요청](history/07-stage1-review-request.md) | 무엇을 봐 달라고 했는가 |
-| [08 1단계 검토 의견서](history/08-stage1-review.md) | 조치 7건 ([요약](history/08b-stage1-review-summary.md)) |
+| [08 1단계 검토 의견서](history/08-stage1-review.md) | 조치 7건 |
 | [09 저장소 정리](history/09-repo-reorg.md) | 폴더 구조와 문서명 정리 계획, 실행 결과 |
 | [10 1단계 검토 회신](history/10-stage1-review-reply.md) | 조치 5건 반영, 1건 미반영, 정정 1건 |
 

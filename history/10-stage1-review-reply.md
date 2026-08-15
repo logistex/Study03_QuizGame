@@ -182,7 +182,7 @@ art_culture    [3,3,2,2] {easy:4, medium:4, hard:2}
 | `PRD-v1~v3`, `README-v1~v3` | `archive/` |
 
 - 코드 네 개는 GitHub Pages 배포 때문에 루트에 그대로 둔다
-- 의견서는 `history/08-stage1-review.md`, 요약본은 `08b-stage1-review-summary.md`다
+- 의견서는 `history/08-stage1-review.md`다
 - 자세한 경과는 [09-repo-reorg.md](09-repo-reorg.md)에 있다
 
 ## 7. 다음
