@@ -185,11 +185,11 @@ const QUESTIONS = {
     },
     {
       id: 'ge_02',
-      question: '세계에서 가장 높은 산은 무엇인가?',
+      question: '해발 기준으로 세계에서 가장 높은 산은 무엇인가?',
       options: ['에베레스트산', 'K2', '킬리만자로산', '몽블랑산'],
       answer: 0,
       difficulty: 'easy',
-      explanation: '에베레스트산은 높이가 약 8,849미터로 세계에서 가장 높은 산이다.'
+      explanation: '에베레스트산은 2020년 재측량으로 확정된 해발 약 8,849미터로 가장 높다.'
     },
     {
       id: 'ge_03',
