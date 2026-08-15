@@ -311,6 +311,71 @@ main {
   outline-offset: 2px;
 }
 
+/* 결과 화면 */
+
+#result-score {
+  margin: 0 0 0.3rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+#result-rate,
+#result-player {
+  margin: 0 0 0.3rem;
+  color: var(--ink-soft);
+}
+
+#result-rank-message {
+  margin: 0.8rem 0;
+  font-weight: 600;
+}
+
+/* 순위표 */
+
+.ranking-group {
+  margin-bottom: 1.4rem;
+}
+
+.ranking-group h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.ranking-table th {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* 강조를 색만으로 주지 않는다. 왼쪽 굵은 선을 함께 둔다. */
+.ranking-row-highlight td {
+  background: #eaf0fa;
+  font-weight: 600;
+}
+
+.ranking-row-highlight td:first-child {
+  border-left: 4px solid var(--accent);
+}
+
+.ranking-empty {
+  margin: 0;
+  padding: 0.6rem 0;
+  color: var(--ink-soft);
+}
+
 /* 좁은 화면 */
 
 @media (max-width: 420px) {

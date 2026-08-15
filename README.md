@@ -62,6 +62,8 @@ archive/     개정 전 판본
 | [17 세션 인계](history/17-session-handoff.md) | 진행 상황, 열린 항목, 작업 규칙과 환경 |
 | [18 2, 3단계 검토 의견서](history/18-stage23-review.md) | 조치 5건, 1차 권고 정정, R1 지표 검증 |
 | [19 2, 3단계 검토 회신](history/19-stage23-review-reply.md) | 조치 3건 반영 계획, 1건 방법 변경, 규격 동결 판단 요청 |
+| [20 2, 3단계 재회신](history/20-stage23-review-round2.md) | 되묻는 것 둘에 대한 답, 추가 조치 5건 |
+| [21 4단계 작업 보고](history/21-stage4-report.md) | 결과 화면과 순위 기록, R3와 R4 확인 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 

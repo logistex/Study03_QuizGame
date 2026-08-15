@@ -403,9 +403,274 @@ function disableUnloadGuard() {
   window.removeEventListener('beforeunload', handleBeforeUnload);
 }
 
-/** 3단계에서는 스텁이다. 4단계에서 점수, 정답률, 순위 저장을 잇는다. */
+/**
+ * 로컬 시간대 기준 YYYY-MM-DD를 만든다.
+ * toISOString().slice(0, 10)을 쓰지 않는다(R4). UTC 기준이라 한국 시간
+ * 오전 9시 이전에는 전날 날짜가 찍히고, 화면으로는 알아채기 어렵다.
+ * 인자를 받는 것은 시스템 시계를 바꾸지 않고 새벽 시각을 검증하기 위해서다.
+ */
+function formatDate(date) {
+  const target = date || new Date();
+  const month = String(target.getMonth() + 1).padStart(2, '0');
+  const day = String(target.getDate()).padStart(2, '0');
+  return target.getFullYear() + '-' + month + '-' + day;
+}
+
+/** 다섯 키가 모두 빈 배열인 객체. 카테고리 넷과 전 범위 하나다. */
+function emptyRankings() {
+  const data = {};
+  CATEGORIES.forEach(function (category) {
+    data[category.id] = [];
+  });
+  data[ALL_KEY] = [];
+  return data;
+}
+
+/**
+ * 순위표 하나를 리스트 단위로 판정한다. 한 항목이라도 형태가 어긋나면
+ * 그 목록만 비운다. 다섯 개를 한꺼번에 비우지 않는다(PRD 4.2절 4번).
+ */
+function sanitizeList(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  const valid = value.every(function (item) {
+    return item !== null && typeof item === 'object' &&
+      typeof item.name === 'string' &&
+      typeof item.score === 'number' &&
+      typeof item.total === 'number' &&
+      typeof item.date === 'string';
+  });
+
+  return valid ? value : [];
+}
+
+/** 저장소에서 읽는다. 접근이나 파싱 자체가 막히면 null이다. */
+function readRankings() {
+  let raw;
+
+  try {
+    raw = localStorage.getItem(STORAGE_KEY);
+  } catch (error) {
+    return null;
+  }
+
+  if (raw === null) {
+    return emptyRankings();
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    return emptyRankings();
+  }
+
+  if (parsed === null || typeof parsed !== 'object') {
+    return emptyRankings();
+  }
+
+  const data = emptyRankings();
+  Object.keys(data).forEach(function (key) {
+    data[key] = sanitizeList(parsed[key]);
+  });
+  return data;
+}
+
+/** 저장소에 쓴다. 실패는 예외로 오므로 성공 여부만 돌려준다. */
+function writeRankings(data) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * 읽기 → 삽입 → 정렬 → 자르기 → 쓰기.
+ * 정수 인덱스, null(미진입), 'unavailable'(저장 불가) 셋 중 하나를 돌려준다.
+ */
+function saveRanking(key, record) {
+  // 화면에 들어올 때 읽어 둔 값을 쓰지 않는다. 두 탭에서 각각 플레이할 때
+  // 나중 저장이 앞선 저장을 덮어쓰는 것을 늦은 읽기로 줄인다.
+  const data = readRankings();
+  if (data === null) {
+    return 'unavailable';
+  }
+
+  const list = data[key];
+  list.unshift(record);
+  // 동점 처리를 넣지 않는다. sort가 안정 정렬이라 맨 앞 삽입만으로
+  // 동점이면 최근 기록이 위에 온다(PRD 3.4절).
+  list.sort(function (a, b) {
+    return b.score - a.score;
+  });
+  data[key] = list.slice(0, key === ALL_KEY ? ALL_LIMIT : CATEGORY_LIMIT);
+
+  if (!writeRankings(data)) {
+    return 'unavailable';
+  }
+
+  // 이름과 점수로 찾지 않는다(R3). 같은 이름, 같은 점수의 기록과 구별되지 않는다.
+  const index = data[key].indexOf(record);
+  return index === -1 ? null : index;
+}
+
+/** 저장 키를 통째로 지운다. */
+function clearAllRankings() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+/**
+ * 순위, 이름, 점수, 날짜 네 열의 표를 그린다.
+ * 순위 번호는 동점이어도 줄 순서대로 매긴다. 강조는 highlightIndex로만 건다.
+ */
+function renderRankingTable(container, list, highlightIndex) {
+  container.textContent = '';
+
+  if (list.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'ranking-empty';
+    empty.textContent = '아직 기록이 없습니다.';
+    container.appendChild(empty);
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'ranking-table';
+
+  const head = document.createElement('tr');
+  ['순위', '이름', '점수', '날짜'].forEach(function (label) {
+    const th = document.createElement('th');
+    th.textContent = label;
+    head.appendChild(th);
+  });
+  table.appendChild(head);
+
+  list.forEach(function (record, index) {
+    const row = document.createElement('tr');
+    if (index === highlightIndex) {
+      row.className = 'ranking-row-highlight';
+    }
+
+    const cells = [
+      String(index + 1),
+      record.name,
+      record.score + ' / ' + record.total,
+      record.date
+    ];
+    cells.forEach(function (text) {
+      const td = document.createElement('td');
+      td.textContent = text;
+      row.appendChild(td);
+    });
+
+    table.appendChild(row);
+  });
+
+  container.appendChild(table);
+}
+
+/** 결과 화면을 그린다. 순위 진입 여부는 saveResult 값으로만 판단한다. */
+function renderResult(saveResult) {
+  document.getElementById('result-score').textContent =
+    state.score + ' / ' + QUIZ_LENGTH + ' 정답';
+  document.getElementById('result-rate').textContent =
+    '정답률 ' + Math.round(state.score / QUIZ_LENGTH * 100) + '%';
+
+  const modeLabel = state.mode === 'all'
+    ? '전 범위 도전'
+    : CATEGORIES.find(function (category) {
+        return category.id === state.categoryId;
+      }).name + ' 도전';
+  document.getElementById('result-player').textContent =
+    state.playerName + ' — ' + modeLabel;
+
+  const message = document.getElementById('result-rank-message');
+  const ranking = document.getElementById('result-ranking');
+  const notice = document.getElementById('result-storage-notice');
+
+  if (saveResult === 'unavailable') {
+    // 진입 여부를 표시하지 않는다. 만점자에게 "들지 못했습니다."가 뜨면 거짓이다.
+    message.textContent = '';
+    ranking.hidden = true;
+    notice.hidden = false;
+    return;
+  }
+
+  notice.hidden = true;
+  ranking.hidden = false;
+  message.textContent = saveResult === null
+    ? '순위표에 들지 못했습니다.'
+    : '순위표 ' + (saveResult + 1) + '위 진입';
+
+  // saveRanking은 인덱스만 돌려주므로 목록은 여기서 다시 읽는다(PRD 3.4절 계약 유지).
+  const data = readRankings();
+  const key = state.mode === 'all' ? ALL_KEY : state.categoryId;
+  renderRankingTable(ranking, data === null ? [] : data[key], saveResult);
+}
+
+/** 순위표 화면을 그린다. 저장소를 못 쓰면 표와 지우기 버튼을 함께 감춘다. */
+function renderRankingScreen() {
+  const data = readRankings();
+  const tables = document.getElementById('ranking-tables');
+  const clearButton = document.getElementById('btn-clear');
+  const notice = document.getElementById('ranking-storage-notice');
+
+  if (data === null) {
+    // 지울 것이 없는 상태에서 버튼만 남으면 눌러도 아무 일이 없어 고장으로 보인다.
+    tables.hidden = true;
+    clearButton.hidden = true;
+    notice.hidden = false;
+    return;
+  }
+
+  notice.hidden = true;
+  tables.hidden = false;
+  clearButton.hidden = false;
+  tables.textContent = '';
+
+  const groups = CATEGORIES.map(function (category) {
+    return { key: category.id, name: category.name };
+  });
+  groups.push({ key: ALL_KEY, name: '전 범위' });
+
+  groups.forEach(function (group) {
+    const section = document.createElement('section');
+    section.className = 'ranking-group';
+
+    const heading = document.createElement('h3');
+    heading.textContent = group.name;
+    section.appendChild(heading);
+
+    const holder = document.createElement('div');
+    renderRankingTable(holder, data[group.key], -1);
+    section.appendChild(holder);
+
+    tables.appendChild(section);
+  });
+}
+
+/** 판을 마친다. 이탈 경고를 끄고 순위를 저장한 뒤 결과 화면을 그린다. */
 function finishGame() {
   disableUnloadGuard();
+
+  const key = state.mode === 'all' ? ALL_KEY : state.categoryId;
+  const saveResult = saveRanking(key, {
+    name: state.playerName,
+    score: state.score,
+    total: QUIZ_LENGTH,
+    date: formatDate()
+  });
+
+  renderResult(saveResult);
   showScreen('screen-result');
 }
 
@@ -432,11 +697,28 @@ function init() {
 
   document.getElementById('player-name').addEventListener('input', clearNameError);
 
-  // 순위표 화면의 내용은 4단계에서 그린다. 여기서는 열고 닫기만 한다.
   document.getElementById('btn-open-ranking').addEventListener('click', function () {
+    renderRankingScreen();
     showScreen('screen-ranking');
   });
   document.getElementById('btn-close-ranking').addEventListener('click', function () {
+    showScreen('screen-start');
+  });
+
+  document.getElementById('btn-clear').addEventListener('click', function () {
+    if (!confirm('저장된 순위 기록을 모두 지우시겠습니까?')) {
+      return;
+    }
+    clearAllRankings();
+    renderRankingScreen();
+  });
+
+  document.getElementById('btn-retry').addEventListener('click', function () {
+    // 이름을 다시 묻지 않는다. 직전 판의 이름을 입력란에 되돌려 놓고 시작한다.
+    document.getElementById('player-name').value = state.playerName;
+    startGame(state.mode, state.categoryId);
+  });
+  document.getElementById('btn-home').addEventListener('click', function () {
     showScreen('screen-start');
   });
 
