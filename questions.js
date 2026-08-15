@@ -143,7 +143,7 @@ const QUESTIONS = {
     {
       id: 'sc_07',
       question: '혈액에서 산소를 실어 나르는 세포는 무엇인가?',
-      options: ['백혈구', '혈소판', '림프구', '적혈구'],
+      options: ['백혈구', '혈소판', '혈장', '적혈구'],
       answer: 3,
       difficulty: 'medium',
       explanation: '적혈구 속 헤모글로빈이 산소와 결합해 온몸으로 산소를 실어 나른다.'

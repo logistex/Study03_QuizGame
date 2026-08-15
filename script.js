@@ -44,7 +44,9 @@ function validateData() {
     list.forEach(function (q, i) {
       const label = typeof q.id === 'string' && q.id !== '' ? q.id : category.id + '[' + i + ']';
 
-      if (seenIds.has(q.id)) {
+      if (typeof q.id !== 'string' || q.id.trim() === '') {
+        errors.push(label + ': id가 비어 있음');
+      } else if (seenIds.has(q.id)) {
         errors.push(label + ': id 중복');
       } else {
         seenIds.add(q.id);
@@ -67,11 +69,18 @@ function validateData() {
       } else if (q.options.length !== 4) {
         errors.push(label + ': options 길이가 ' + q.options.length);
       } else {
-        const duplicated = q.options.find(function (option, index) {
+        q.options.forEach(function (option, index) {
+          if (typeof option !== 'string' || option.trim() === '') {
+            errors.push(label + ': options[' + index + ']가 비어 있음');
+          }
+        });
+        // 값이 아니라 인덱스로 판정한다. find는 중복 값이 undefined일 때
+        // undefined를 돌려주어 "못 찾음"과 구별되지 않는다.
+        const duplicatedIndex = q.options.findIndex(function (option, index) {
           return q.options.indexOf(option) !== index;
         });
-        if (duplicated !== undefined) {
-          errors.push(label + ": options에 중복된 선택지 '" + duplicated + "'");
+        if (duplicatedIndex !== -1) {
+          errors.push(label + ": options에 중복된 선택지 '" + q.options[duplicatedIndex] + "'");
         }
       }
 

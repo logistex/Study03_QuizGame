@@ -12,7 +12,7 @@
 
 | 단계 | 내용 | 상태 |
 |---|---|---|
-| 1 | 데이터 검사 함수와 `questions.js` | 완료. 검토 회신 반영 대기 |
+| 1 | 데이터 검사 함수와 `questions.js` | 완료. 검토 의견 반영 완료 |
 | 2 | `index.html` 골격과 시작 화면 | |
 | 3 | 문제 선정, 퀴즈 진행, 즉시 피드백 | |
 | 4 | 결과 화면과 순위 기록, 순위표 화면 | |
@@ -51,6 +51,8 @@ archive/     개정 전 판본
 | [06 1단계 작업 보고](history/06-stage1-report.md) | 검증 결과와 계획 이탈 |
 | [07 1단계 검토 요청](history/07-stage1-review-request.md) | 무엇을 봐 달라고 했는가 |
 | [08 1단계 검토 의견서](history/08-stage1-review.md) | 조치 7건 ([요약](history/08b-stage1-review-summary.md)) |
+| [09 저장소 정리](history/09-repo-reorg.md) | 폴더 구조와 문서명 정리 계획, 실행 결과 |
+| [10 1단계 검토 회신](history/10-stage1-review-reply.md) | 조치 5건 반영, 1건 미반영, 정정 1건 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
