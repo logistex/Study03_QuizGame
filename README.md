@@ -59,6 +59,7 @@ archive/     개정 전 판본
 | [14 2단계 작업 보고](history/14-stage2-report.md) | 시작 화면 구현, 완료 기준과 체크리스트 확인 |
 | [15 3단계 작업 보고](history/15-stage3-report.md) | 퀴즈 진행 구현, R1과 R2 실측 확인 |
 | [16 2, 3단계 검토 요청](history/16-stage23-review-request.md) | 스크린리더와 키보드 등 자동으로 못 본 넷 |
+| [17 세션 인계](history/17-session-handoff.md) | 진행 상황, 열린 항목, 작업 규칙과 환경 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
