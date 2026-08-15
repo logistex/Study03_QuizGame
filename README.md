@@ -55,6 +55,7 @@ archive/     개정 전 판본
 | [10 1단계 검토 회신](history/10-stage1-review-reply.md) | 조치 5건 반영, 1건 미반영, 정정 1건 |
 | [11 1단계 검토 2차 의견](history/11-stage1-review-round2.md) | 반영 실측 확인, 정정 수용, 근거 교체 권고 |
 | [12 문제 검증 지침 보완](history/12-question-guidelines.md) | 교차 검증 가이드라인의 자리 배정, 조치 5건 |
+| [13 2차 회신](history/13-stage1-review-reply2.md) | 조치 3건 반영, 1건 미채택, 1건 보류, 선택 근거 기록 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
