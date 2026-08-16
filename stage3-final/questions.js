@@ -1,0 +1,348 @@
+// 생성: 2026-08-13 23:09 KST
+
+const CATEGORIES = [
+  { id: 'korean_history', name: '한국사' },
+  { id: 'science',        name: '과학' },
+  { id: 'geography',      name: '지리' },
+  { id: 'art_culture',    name: '예술과 문화' }
+];
+
+const QUESTIONS = {
+  korean_history: [
+    {
+      id: 'kh_01',
+      question: '조선을 건국한 인물은 누구인가?',
+      options: ['이성계', '이방원', '정도전', '왕건'],
+      answer: 0,
+      difficulty: 'easy',
+      explanation: '이성계는 1392년 고려를 무너뜨리고 조선을 세워 태조가 되었다.'
+    },
+    {
+      id: 'kh_02',
+      question: '훈민정음을 창제한 조선의 왕은 누구인가?',
+      options: ['성종', '세조', '세종', '정조'],
+      answer: 2,
+      difficulty: 'easy',
+      explanation: '세종은 1443년 훈민정음을 만들고 1446년에 백성에게 반포했다.'
+    },
+    {
+      id: 'kh_03',
+      question: '삼국 통일을 완성한 신라의 왕은 누구인가?',
+      options: ['진흥왕', '문무왕', '법흥왕', '무열왕'],
+      answer: 1,
+      difficulty: 'medium',
+      explanation: '문무왕은 676년 당의 세력을 몰아내고 삼국 통일을 완성했다.'
+    },
+    {
+      id: 'kh_04',
+      question: '고려를 세운 인물은 누구인가?',
+      options: ['궁예', '견훤', '왕건', '최승로'],
+      answer: 2,
+      difficulty: 'easy',
+      explanation: '왕건은 918년 궁예를 몰아내고 왕위에 올라 나라 이름을 고려라 했다.'
+    },
+    {
+      id: 'kh_05',
+      question: '임진왜란 때 한산도 대첩을 이끈 장수는 누구인가?',
+      options: ['권율', '이순신', '김시민', '원균'],
+      answer: 1,
+      difficulty: 'easy',
+      explanation: '이순신은 1592년 한산도 앞바다에서 학익진으로 일본 수군을 크게 깨뜨렸다.'
+    },
+    {
+      id: 'kh_06',
+      question: '고구려 유민을 이끌고 발해를 세운 인물은 누구인가?',
+      options: ['대조영', '장보고', '연개소문', '을지문덕'],
+      answer: 0,
+      difficulty: 'medium',
+      explanation: '대조영은 698년 고구려 유민과 말갈족을 이끌고 동모산에서 발해를 세웠다.'
+    },
+    {
+      id: 'kh_07',
+      // 근거: 문항이 "지은 사람"을 물으므로 저술 완성(1610) 기준. 간행 1613년은 다른 사건.
+      question: '조선의 의서 『동의보감』을 지은 사람은 누구인가?',
+      options: ['정약용', '이제마', '허준', '유형원'],
+      answer: 2,
+      difficulty: 'medium',
+      explanation: '허준은 선조의 명으로 『동의보감』을 짓기 시작해 1610년에 완성했다.'
+    },
+    {
+      id: 'kh_08',
+      question: '1919년에 전국으로 퍼진 독립 만세 운동은 무엇인가?',
+      options: ['6·10 만세 운동', '물산 장려 운동', '광주 학생 항일 운동', '3·1 운동'],
+      answer: 3,
+      difficulty: 'medium',
+      explanation: '3·1 운동은 1919년 3월 1일 서울에서 시작해 전국과 국외로 퍼졌다.'
+    },
+    {
+      id: 'kh_09',
+      // 근거: 문항이 "반포한 왕"을 물으므로 시행(1485, 성종) 기준. 편찬 시작은 세조 때.
+      question: '조선의 기본 법전인 『경국대전』을 반포한 왕은 누구인가?',
+      options: ['태종', '세조', '중종', '성종'],
+      answer: 3,
+      difficulty: 'hard',
+      explanation: '『경국대전』은 세조 때 편찬을 시작해 성종 때인 1485년부터 시행되었다.'
+    },
+    {
+      id: 'kh_10',
+      question: '몽골의 침입에 맞서 도읍을 강화도로 옮긴 집권자는 누구인가?',
+      options: ['최우', '김부식', '정중부', '최충헌'],
+      answer: 0,
+      difficulty: 'hard',
+      explanation: '무신 정권의 최우는 1232년 몽골의 침입을 피해 도읍을 개경에서 강화도로 옮겼다.'
+    }
+  ],
+
+  science: [
+    {
+      id: 'sc_01',
+      question: '물 분자를 나타내는 화학식은 무엇인가?',
+      options: ['CO2', 'H2O', 'O2', 'NaCl'],
+      answer: 1,
+      difficulty: 'easy',
+      explanation: '물 분자는 수소 원자 두 개와 산소 원자 한 개로 이루어져 H2O로 적는다.'
+    },
+    {
+      id: 'sc_02',
+      question: '1기압에서 순수한 물이 끓는 온도는 몇 도인가?',
+      options: ['0도', '50도', '80도', '100도'],
+      answer: 3,
+      difficulty: 'easy',
+      explanation: '1기압에서 순수한 물은 섭씨 100도에서 끓어 수증기가 된다.'
+    },
+    {
+      id: 'sc_03',
+      question: '태양계에서 가장 큰 행성은 무엇인가?',
+      options: ['목성', '토성', '천왕성', '지구'],
+      answer: 0,
+      difficulty: 'easy',
+      explanation: '목성은 지름이 지구의 약 11배로 태양계의 행성 가운데 가장 크다.'
+    },
+    {
+      id: 'sc_04',
+      question: '식물이 빛으로 양분을 만드는 과정을 무엇이라 하는가?',
+      options: ['호흡', '증산', '광합성', '발효'],
+      answer: 2,
+      difficulty: 'easy',
+      explanation: '광합성은 식물이 빛에너지로 이산화 탄소와 물에서 양분을 만드는 과정이다.'
+    },
+    {
+      id: 'sc_05',
+      question: '소리가 가장 빠르게 전달되는 물질의 상태는 무엇인가?',
+      options: ['고체', '액체', '기체', '진공'],
+      answer: 0,
+      difficulty: 'medium',
+      explanation: '소리는 입자가 촘촘히 붙어 있을수록 빠르게 전달되므로 고체에서 가장 빠르다.'
+    },
+    {
+      id: 'sc_06',
+      question: '공기 중에 가장 많이 들어 있는 기체는 무엇인가?',
+      options: ['산소', '질소', '이산화 탄소', '수소'],
+      answer: 1,
+      difficulty: 'medium',
+      explanation: '공기의 약 78%가 질소이고 산소는 약 21%다.'
+    },
+    {
+      id: 'sc_07',
+      question: '혈액에서 산소를 실어 나르는 세포는 무엇인가?',
+      options: ['백혈구', '혈소판', '혈장', '적혈구'],
+      answer: 3,
+      difficulty: 'medium',
+      explanation: '적혈구 속 헤모글로빈이 산소와 결합해 온몸으로 산소를 실어 나른다.'
+    },
+    {
+      id: 'sc_08',
+      question: '주기율표에서 원자 번호가 1번인 원소는 무엇인가?',
+      options: ['헬륨', '산소', '수소', '탄소'],
+      answer: 2,
+      difficulty: 'medium',
+      explanation: '수소는 원자핵에 양성자가 하나뿐이어서 원자 번호가 1이다.'
+    },
+    {
+      id: 'sc_09',
+      question: '빛이 프리즘을 지나 여러 색으로 나뉘는 현상은 무엇인가?',
+      options: ['굴절', '분산', '반사', '회절'],
+      answer: 1,
+      difficulty: 'hard',
+      explanation: '색마다 굴절되는 정도가 달라 흰빛이 여러 색으로 갈라지는데, 이를 분산이라 한다.'
+    },
+    {
+      id: 'sc_10',
+      // 근거: 주류 학설. 프랭클린의 X선 회절 자료가 결정적이었다는 평가는 정착했으나,
+      //       구조를 밝혀 발표한 사람으로는 왓슨과 크릭이 표준 서술이다.
+      question: 'DNA가 이중 나선 구조임을 밝힌 과학자는 누구인가?',
+      options: ['왓슨과 크릭', '멘델과 다윈', '파스퇴르와 코흐', '퀴리와 러더퍼드'],
+      answer: 0,
+      difficulty: 'hard',
+      explanation: '왓슨과 크릭은 1953년 DNA가 두 가닥이 꼬인 이중 나선 구조임을 밝혔다.'
+    }
+  ],
+
+  geography: [
+    {
+      id: 'ge_01',
+      question: '우리나라에서 가장 큰 섬은 어디인가?',
+      options: ['거제도', '울릉도', '제주도', '강화도'],
+      answer: 2,
+      difficulty: 'easy',
+      explanation: '제주도는 면적이 약 1,833제곱킬로미터로 우리나라에서 가장 큰 섬이다.'
+    },
+    {
+      id: 'ge_02',
+      // 근거: 2020년 중국, 네팔 공동 재측량치. 이전 자료는 8,848m라 교과서에 따라 다르다.
+      question: '해발 기준으로 세계에서 가장 높은 산은 무엇인가?',
+      options: ['에베레스트산', 'K2', '킬리만자로산', '몽블랑산'],
+      answer: 0,
+      difficulty: 'easy',
+      explanation: '에베레스트산은 2020년 재측량으로 확정된 해발 약 8,849미터로 가장 높다.'
+    },
+    {
+      id: 'ge_03',
+      question: '태평양과 대서양을 잇는 중앙아메리카의 운하는 무엇인가?',
+      options: ['수에즈 운하', '킬 운하', '코린트 운하', '파나마 운하'],
+      answer: 3,
+      difficulty: 'medium',
+      explanation: '파나마 운하는 1914년에 열려 두 대양을 오가는 뱃길을 크게 줄였다.'
+    },
+    {
+      id: 'ge_04',
+      question: '남한에서 가장 긴 강은 무엇인가?',
+      options: ['한강', '낙동강', '금강', '섬진강'],
+      answer: 1,
+      difficulty: 'medium',
+      explanation: '낙동강은 길이가 약 510킬로미터로 남한의 강 가운데 가장 길다.'
+    },
+    {
+      id: 'ge_05',
+      question: '오스트레일리아의 수도는 어디인가?',
+      options: ['시드니', '멜버른', '캔버라', '브리즈번'],
+      answer: 2,
+      difficulty: 'medium',
+      explanation: '오스트레일리아는 시드니와 멜버른이 수도를 두고 다투자 그 사이에 캔버라를 세웠다.'
+    },
+    {
+      id: 'ge_06',
+      question: '지구에서 가장 넓은 바다는 무엇인가?',
+      options: ['태평양', '대서양', '인도양', '북극해'],
+      answer: 0,
+      difficulty: 'easy',
+      explanation: '태평양은 지구에 있는 바다 넓이의 약 절반을 차지한다.'
+    },
+    {
+      id: 'ge_07',
+      question: '사하라 사막이 있는 대륙은 어디인가?',
+      options: ['아시아', '아프리카', '남아메리카', '오세아니아'],
+      answer: 1,
+      difficulty: 'easy',
+      explanation: '사하라 사막은 아프리카 북부에 걸쳐 있는 세계에서 가장 넓은 더운 사막이다.'
+    },
+    {
+      id: 'ge_08',
+      question: '경도 0도인 본초 자오선이 지나는 영국의 지역은 어디인가?',
+      options: ['에든버러', '옥스퍼드', '케임브리지', '그리니치'],
+      answer: 3,
+      difficulty: 'hard',
+      explanation: '본초 자오선은 런던 그리니치 천문대를 지나는 경도 0도의 기준선이다.'
+    },
+    {
+      id: 'ge_09',
+      question: '국토 면적이 세계에서 가장 넓은 나라는 어디인가?',
+      options: ['러시아', '캐나다', '중국', '미국'],
+      answer: 0,
+      difficulty: 'medium',
+      explanation: '러시아는 국토 면적이 약 1,710만 제곱킬로미터로 세계에서 가장 넓다.'
+    },
+    {
+      id: 'ge_10',
+      question: '화산과 지진이 잦은 태평양 가장자리를 무엇이라 부르는가?',
+      options: ['판게아', '불의 고리', '대순환', '해구'],
+      answer: 1,
+      difficulty: 'hard',
+      explanation: '태평양 가장자리를 따라 화산대와 지진대가 고리 모양으로 이어져 불의 고리라 부른다.'
+    }
+  ],
+
+  art_culture: [
+    {
+      id: 'ac_01',
+      question: '「모나리자」를 그린 화가는 누구인가?',
+      options: ['라파엘로', '레오나르도 다빈치', '미켈란젤로', '보티첼리'],
+      answer: 1,
+      difficulty: 'easy',
+      explanation: '레오나르도 다빈치는 16세기 초에 「모나리자」를 그렸고 지금은 루브르 박물관에 있다.'
+    },
+    {
+      id: 'ac_02',
+      question: '「해바라기」 연작을 그린 네덜란드 화가는 누구인가?',
+      options: ['빈센트 반 고흐', '폴 고갱', '폴 세잔', '에드가 드가'],
+      answer: 0,
+      difficulty: 'easy',
+      explanation: '반 고흐는 프랑스 아를에 머물던 1888년 무렵부터 「해바라기」 연작을 그렸다.'
+    },
+    {
+      id: 'ac_03',
+      question: '판소리에서 북으로 장단을 맞추는 사람을 무엇이라 하는가?',
+      options: ['악사', '창자', '고수', '명창'],
+      answer: 2,
+      difficulty: 'medium',
+      explanation: '고수는 북으로 장단을 짚고 추임새를 넣어 소리꾼의 소리를 받쳐 준다.'
+    },
+    {
+      id: 'ac_04',
+      question: '「운명」이라 불리는 교향곡 5번을 작곡한 사람은 누구인가?',
+      options: ['모차르트', '하이든', '바흐', '베토벤'],
+      answer: 3,
+      difficulty: 'easy',
+      explanation: '베토벤의 교향곡 5번은 첫머리 네 음이 운명이 문을 두드리는 소리에 비유되어 그렇게 불린다.'
+    },
+    {
+      id: 'ac_05',
+      question: '「씨름」과 「서당」을 그린 조선 후기의 화가는 누구인가?',
+      options: ['김홍도', '신윤복', '정선', '장승업'],
+      answer: 0,
+      difficulty: 'medium',
+      explanation: '김홍도는 「씨름」, 「서당」처럼 백성의 일상을 담은 풍속화를 여럿 남겼다.'
+    },
+    {
+      id: 'ac_06',
+      question: '조선 태조부터 철종까지의 역사를 날짜순으로 적은 책은?',
+      options: ['승정원일기', '조선왕조실록', '직지심체요절', '동의보감'],
+      answer: 1,
+      difficulty: 'medium',
+      explanation: '『조선왕조실록』은 태조부터 철종까지 472년의 역사를 연월일 순으로 적은 기록이다.'
+    },
+    {
+      id: 'ac_07',
+      question: '『햄릿』과 『로미오와 줄리엣』을 쓴 영국의 극작가는?',
+      options: ['찰스 디킨스', '제인 오스틴', '셰익스피어', '오스카 와일드'],
+      answer: 2,
+      difficulty: 'easy',
+      explanation: '셰익스피어는 16세기 말부터 『햄릿』, 『로미오와 줄리엣』 등 여러 희곡을 썼다.'
+    },
+    {
+      id: 'ac_08',
+      question: '「수련」 연작을 남긴 프랑스 인상주의 화가는 누구인가?',
+      options: ['에두아르 마네', '오귀스트 르누아르', '카미유 피사로', '클로드 모네'],
+      answer: 3,
+      difficulty: 'medium',
+      explanation: '모네는 지베르니의 정원에 연못을 만들고 그곳에 핀 수련을 30년 가까이 그렸다.'
+    },
+    {
+      id: 'ac_09',
+      question: '「절규」를 그린 노르웨이 화가는 누구인가?',
+      options: ['에드바르 뭉크', '구스타프 클림트', '파블로 피카소', '살바도르 달리'],
+      answer: 0,
+      difficulty: 'hard',
+      explanation: '뭉크는 1893년 「절규」에서 다리 위 인물의 불안을 강렬한 색과 곡선으로 담았다.'
+    },
+    {
+      id: 'ac_10',
+      // 근거: 문항이 "작곡한"을 물으므로 작곡(1876) 기준. 초연 1877년은 다른 사건.
+      question: '발레 「백조의 호수」를 작곡한 러시아 작곡가는 누구인가?',
+      options: ['스트라빈스키', '차이콥스키', '라흐마니노프', '무소륵스키'],
+      answer: 1,
+      difficulty: 'hard',
+      explanation: '차이콥스키는 1876년에 발레 「백조의 호수」를 작곡했다.'
+    }
+  ]
+};
