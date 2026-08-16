@@ -8,21 +8,35 @@
 
 ## 현재 상태
 
-**여섯 단계 중 4단계까지 구현했다.** 한 판 10문제를 끝까지 풀면 결과 화면에 점수와 정답률, 순위 진입 여부가 나오고 기록이 순위표에 남는다.
+**여섯 단계를 모두 마치고 배포했다.** → **<https://logistex.github.io/Study03_QuizGame/>**
 
 | 단계 | 내용 | 상태 |
 |---|---|---|
-| 1 | 데이터 검사 함수와 `questions.js` | 완료. 검토 의견 반영 완료 |
+| 1 | 데이터 검사 함수와 `questions.js` | 완료. 검토 반영 완료 |
 | 2 | `index.html` 골격과 시작 화면 | 완료 |
 | 3 | 문제 선정, 퀴즈 진행, 즉시 피드백 | 완료 |
-| 4 | 결과 화면과 순위 기록, 순위표 화면 | 완료. 검토 요청 |
-| 5 | 반응형 마무리와 에러 처리 | |
-| 6 | 배포와 배포 후 확인 | |
+| 4 | 결과 화면과 순위 기록, 순위표 화면 | 완료. 검토 두 바퀴 반영 완료 |
+| 5 | 반응형 마무리와 에러 처리 | 완료. 점검만 했고 코드 변경 없음 |
+| 6 | 배포와 배포 후 확인 | 완료. 검토 요청 |
+
+### 단계별로 열어 보기
+
+각 단계의 **검토 반영까지 끝난 시점**을 그대로 띄워 두었다.
+
+| 단계 | 주소 | 열면 보이는 것 |
+|---|---|---|
+| 1 | [stage1-final](https://logistex.github.io/Study03_QuizGame/stage1-final/) | 빈 화면. 콘솔에 `validateData()`를 쳐야 결과가 보인다 |
+| 2 | [stage2](https://logistex.github.io/Study03_QuizGame/stage2/) | 시작 화면. 카드를 눌러도 판이 시작되지 않는다 |
+| 3 | [stage3-final](https://logistex.github.io/Study03_QuizGame/stage3-final/) | 10문제를 끝까지 풀 수 있다. 결과 화면은 빈 껍데기다 |
+| 4 | [stage4-final](https://logistex.github.io/Study03_QuizGame/stage4-final/) | 점수, 정답률, 순위 진입, 순위표까지 나온다 |
+| 5 | [stage5-final](https://logistex.github.io/Study03_QuizGame/stage5-final/) | 점검만 한 단계라 코드는 4단계와 같다 |
+
+**여섯 주소가 같은 오리진이라 순위 기록을 공유한다.** 3단계를 보다 4단계로 가면 앞서 쌓은 기록이 그대로 보인다. 2단계만 주소에 `-final`이 없는데, 2단계 검토를 3단계와 묶어 받아 단독 최종본이 존재하지 않기 때문이다.
 
 ## 폴더 구성
 
 ```
-/            배포 산출물 네 개와 README
+/            배포 산출물 네 개, README, CLAUDE.md
 spec/        현재 유효한 규격 (PRD, 구현 계획)
 history/     협의와 진행 기록 (번호순 = 시간순)
 archive/     개정 전 판본
@@ -141,7 +155,9 @@ PRD는 세 차례 개정을 거쳤다. 검토 전후를 대조할 수 있도록 
 
 ## 실행 방법
 
-구현이 끝나면 배포 URL로 접속하면 된다. 설치할 것도, 띄울 서버도 없다. 로컬에서 확인할 때는 `index.html`을 브라우저로 열어도 된다.
+<https://logistex.github.io/Study03_QuizGame/> 로 접속하면 된다. 설치할 것도, 띄울 서버도 없다.
+
+로컬에서 확인할 때는 `index.html`을 브라우저로 열어도 된다. 다만 **사파리는 `file://`에서 `localStorage` 접근에 실패해 순위가 저장되지 않는다**(PRD 4.1절). 로컬 확인은 크롬이나 엣지로 한다.
 
 ## 배경
 
