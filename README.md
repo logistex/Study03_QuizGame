@@ -59,6 +59,7 @@ archive/     개정 전 판본
 
 | 문서 | 내용 |
 |---|---|
+| [00 PRD 검토 의견서](history/00-prd-review.md) | PRD를 v2에서 v3로 고치게 한 검토. 한 판 10문제, 3+3+2+2 배분, GitHub Pages 전환 |
 | [01 계획 검토 의견서](history/01-plan-review.md) | 필수 3건, 권고 9건 |
 | [02 재검토](history/02-plan-review-round2.md) | 회신에 대한 검토 측 재검토 |
 | [03 최종 회신](history/03-plan-review-reply.md) | 합의와 정정 정리 |
