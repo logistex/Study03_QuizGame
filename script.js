@@ -646,19 +646,24 @@ function renderRankingScreen() {
   const tables = document.getElementById('ranking-tables');
   const clearButton = document.getElementById('btn-clear');
   const notice = document.getElementById('ranking-storage-notice');
+  const persistNotice = document.getElementById('ranking-persist-notice');
+  const storageOk = data !== null && canWriteRankings();
+
+  // "사라질 수 있습니다"는 저장이 된다는 전제로 쓰인 문장이다. 저장이 아예 막힌
+  // 상태에서 이 문장만 남으면 사실과 반대되는 안심을 준다.
+  persistNotice.hidden = !storageOk;
+  notice.hidden = storageOk;
 
   if (data === null) {
     // 읽기조차 막힌 상태다. 지울 것이 없는데 버튼만 남으면 눌러도 아무 일이 없어
     // 고장으로 보인다.
     tables.hidden = true;
     clearButton.hidden = true;
-    notice.hidden = false;
     return;
   }
 
   // 읽기는 되고 쓰기만 막히는 경우. 표는 그대로 그린다. 기존 기록이 있을 수 있고,
   // 용량이 차서 막힌 것이라면 "기록 지우기"가 그 상황을 푸는 수단이다.
-  notice.hidden = canWriteRankings();
   tables.hidden = false;
   clearButton.hidden = false;
   tables.textContent = '';
