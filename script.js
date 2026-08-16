@@ -7,6 +7,7 @@ const DIFFICULTY_LABELS = { easy: '초급', medium: '중급', hard: '고급' };
 const CATEGORY_LIMIT = 5;
 const ALL_LIMIT = 10;
 const STORAGE_KEY = 'quizGameRankings';
+const PROBE_KEY = 'quizGameStorageProbe';
 const ALL_KEY = 'all';
 
 /**
@@ -248,9 +249,13 @@ function pickAllQuiz() {
   return shuffle(picked);
 }
 
-/** 이름 검증을 통과하면 판을 시작한다. */
-function startGame(mode, categoryId) {
-  const name = readPlayerName();
+/**
+ * 이름 검증을 통과하면 판을 시작한다.
+ * playerName을 넘기면 입력란을 읽지 않는다. "다시 도전"이 직전 판의 이름을
+ * 그대로 쓰는 통로다. 입력란을 게임 상태의 통로로 삼지 않기 위해 인자로 받는다.
+ */
+function startGame(mode, categoryId, playerName) {
+  const name = playerName === undefined ? readPlayerName() : playerName;
   if (name === null) {
     return;
   }
@@ -478,6 +483,22 @@ function readRankings() {
   return data;
 }
 
+/**
+ * 저장소에 쓸 수 있는지 시험한다.
+ * 읽기 성공만으로는 판정할 수 없다. 읽기는 되고 쓰기만 막히는 경우가 흔하고,
+ * 그 상태에서는 한 판도 안 한 사용자에게 저장 불가가 전달될 통로가 없다.
+ * 순위 기록을 건드리지 않도록 별도 키로 시험하고 곧바로 지운다.
+ */
+function canWriteRankings() {
+  try {
+    localStorage.setItem(PROBE_KEY, '1');
+    localStorage.removeItem(PROBE_KEY);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 /** 저장소에 쓴다. 실패는 예외로 오므로 성공 여부만 돌려준다. */
 function writeRankings(data) {
   try {
@@ -549,6 +570,8 @@ function renderRankingTable(container, list, highlightIndex) {
   const head = document.createElement('tr');
   ['순위', '이름', '점수', '날짜'].forEach(function (label) {
     const th = document.createElement('th');
+    // 헤더 행이 본문과 같은 그룹에 놓이므로 scope로 열 머리임을 밝힌다.
+    th.scope = 'col';
     th.textContent = label;
     head.appendChild(th);
   });
@@ -625,14 +648,17 @@ function renderRankingScreen() {
   const notice = document.getElementById('ranking-storage-notice');
 
   if (data === null) {
-    // 지울 것이 없는 상태에서 버튼만 남으면 눌러도 아무 일이 없어 고장으로 보인다.
+    // 읽기조차 막힌 상태다. 지울 것이 없는데 버튼만 남으면 눌러도 아무 일이 없어
+    // 고장으로 보인다.
     tables.hidden = true;
     clearButton.hidden = true;
     notice.hidden = false;
     return;
   }
 
-  notice.hidden = true;
+  // 읽기는 되고 쓰기만 막히는 경우. 표는 그대로 그린다. 기존 기록이 있을 수 있고,
+  // 용량이 차서 막힌 것이라면 "기록 지우기"가 그 상황을 푸는 수단이다.
+  notice.hidden = canWriteRankings();
   tables.hidden = false;
   clearButton.hidden = false;
   tables.textContent = '';
@@ -714,9 +740,8 @@ function init() {
   });
 
   document.getElementById('btn-retry').addEventListener('click', function () {
-    // 이름을 다시 묻지 않는다. 직전 판의 이름을 입력란에 되돌려 놓고 시작한다.
-    document.getElementById('player-name').value = state.playerName;
-    startGame(state.mode, state.categoryId);
+    // 이름을 다시 묻지 않는다. 직전 판의 이름을 그대로 넘긴다.
+    startGame(state.mode, state.categoryId, state.playerName);
   });
   document.getElementById('btn-home').addEventListener('click', function () {
     showScreen('screen-start');

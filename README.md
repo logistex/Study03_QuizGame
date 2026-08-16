@@ -65,6 +65,8 @@ archive/     개정 전 판본
 | [20 2, 3단계 재회신](history/20-stage23-review-round2.md) | 되묻는 것 둘에 대한 답, 추가 조치 5건 |
 | [21 4단계 작업 보고](history/21-stage4-report.md) | 결과 화면과 순위 기록, R3와 R4 확인 |
 | [22 4단계 검토 요청](history/22-stage4-review-request.md) | R3 코드 확인 요청, 확인 못한 셋, 판단 요청 셋 |
+| [23 4단계 검토 의견서](history/23-stage4-review.md) | R3 통과, 저장 불가 결함 1건, 조치 6건 |
+| [24 4단계 검토 회신](history/24-stage4-review-reply.md) | 조치 6건 반영, 처방 1건 변경, 되묻는 것 1건 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
