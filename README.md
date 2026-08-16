@@ -113,6 +113,7 @@ PRD는 세 차례 개정을 거쳤다. 검토 전후를 대조할 수 있도록 
 | 문서 | 내용 |
 |---|---|
 | [CLAUDE-v1](archive/CLAUDE-v1.md) | 프로젝트 수준 `CLAUDE.md` 최초본 |
+| [CLAUDE-v2](archive/CLAUDE-v2.md) | 1차 구현을 마치고 5, 6단계 검토까지 반영한 시점 |
 | [17-session-handoff-v1](archive/17-session-handoff-v1.md) | 규칙을 `CLAUDE.md`로 옮기기 전의 인계 문서 |
 | [CLAUDE-global](archive/CLAUDE-global.md) | 사용자 수준 지침(`~/.claude/CLAUDE.md`)의 사본. 대조용이며 이 위치의 파일이 적용되지는 않는다 |
 
