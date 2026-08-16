@@ -84,6 +84,14 @@ PRD는 세 차례 개정을 거쳤다. 검토 전후를 대조할 수 있도록 
 
 `README-v1` ~ `README-v3`도 같은 폴더에 있다. 각 PRD 시점의 저장소 상태를 담은 스냅숏이다.
 
+작업 규칙 쪽도 같은 방식으로 남겼다.
+
+| 문서 | 내용 |
+|---|---|
+| [CLAUDE-v1](archive/CLAUDE-v1.md) | 프로젝트 수준 `CLAUDE.md` 최초본 |
+| [17-session-handoff-v1](archive/17-session-handoff-v1.md) | 규칙을 `CLAUDE.md`로 옮기기 전의 인계 문서 |
+| [CLAUDE-global](archive/CLAUDE-global.md) | 사용자 수준 지침(`~/.claude/CLAUDE.md`)의 사본. 대조용이며 이 위치의 파일이 적용되지는 않는다 |
+
 ## 구현 계획
 
 [구현 계획](spec/IMPL-PLAN.md)은 PRD 6절의 여섯 단계를 그대로 골격으로 쓰고, 무거운 단계만 하위 작업으로 쪼갰다. 단계마다 만들 파일, 정의할 함수와 그 책임, 선행 조건, 그리고 **무엇을 눌러 무엇을 확인하는지**까지 적었다.
