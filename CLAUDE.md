@@ -84,6 +84,34 @@ if __name__ == '__main__':
 - 포트는 **8010**이다. PRD 4.1절은 8000으로 적었으나 다른 작업이 그 포트를 쓰고 있어 비켜 두었다. 중요한 것은 값이 아니라 고정이다
 - 로컬에서 `file://`로 열면 사파리는 `localStorage` 접근에서 오류를 낸다. 로컬 확인은 크롬이나 엣지로 한다(PRD 4.1절)
 
+## 배포
+
+`gh-pages` 브랜치가 배포물이다. `main`은 소스와 문서만 담는다.
+
+```
+gh-pages/
+├── index.html, style.css, script.js, questions.js   최신본
+├── .nojekyll
+├── stage1-final/   각 단계의 검토 반영까지 끝난 시점, 파일 넷만
+├── stage2/         2단계만 -final이 없다
+├── stage3-final/
+├── stage4-final/
+└── stage5-final/
+```
+
+태그가 바뀌면 그 폴더만 다시 만든다. `git archive`가 태그 시점의 파일을 그대로 꺼내므로 워크트리를 만들 필요가 없다.
+
+```bash
+git worktree add --detach /tmp/ghp && cd /tmp/ghp && git checkout gh-pages
+git archive main index.html style.css script.js questions.js | tar -x
+for t in stage1-final stage2 stage3-final stage4-final stage5-final; do
+  mkdir -p "$t" && git archive "$t" index.html style.css script.js questions.js | tar -x -C "$t"
+done
+```
+
+- **문서는 복사하지 않는다.** `spec/`, `history/`, `archive/`까지 넣으면 같은 문서가 여섯 벌 생긴다
+- **여섯 주소가 같은 오리진이라 `localStorage`를 공유한다.** 3단계를 보다 4단계로 가면 앞서 쌓인 기록이 그대로 보인다. 저장 키에 단계를 붙이는 것은 배포본 코드를 고치는 일이라 하지 않고, 노트에 한 줄 적는 것으로 갈음한다
+
 ## 저장소 구조와 태그
 
 ```
