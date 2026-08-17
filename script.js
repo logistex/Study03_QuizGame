@@ -74,6 +74,13 @@ function validateData() {
         seenQuestions.add(q.question);
       }
 
+      // 길이 두 검사는 PRD 3.6절이 못박은 규칙인데 확인하는 자리가 없었다.
+      // 중복 검사와 달리 else if로 잇지 않는다. 중복이면서 길기도 한 문항을
+      // 한 번에 다 보고해야 고치는 사람이 두 번 돌리지 않는다.
+      if (typeof q.question === 'string' && q.question.length > 60) {
+        errors.push(label + ': question이 ' + q.question.length + '자');
+      }
+
       if (typeof q.explanation !== 'string' || q.explanation.trim() === '') {
         errors.push(label + ': explanation이 비어 있음');
       }
@@ -86,6 +93,8 @@ function validateData() {
         q.options.forEach(function (option, index) {
           if (typeof option !== 'string' || option.trim() === '') {
             errors.push(label + ': options[' + index + ']가 비어 있음');
+          } else if (option.length > 20) {
+            errors.push(label + ': options[' + index + ']가 ' + option.length + '자');
           }
         });
         // 값이 아니라 인덱스로 판정한다. find는 중복 값이 undefined일 때
