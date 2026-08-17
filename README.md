@@ -91,6 +91,7 @@ archive/     개정 전 판본
 | [29 5, 6단계 검토 요청](history/29-stage56-review-request.md) | 배포 구조 판단 요청, 절차가 충분한지 |
 | [30 5, 6단계 검토 의견서](history/30-stage56-review.md) | 필수 없음. 배포본 재측정, 실습 회고 |
 | [31 5, 6단계 검토 회신](history/31-stage56-review-reply.md) | 조치 5건 반영, 양쪽이 틀린 자리 대조, 진행 방식 |
+| [33 문제 출처 교차 검증](history/33-question-source-verification.md) | 40문항을 외부 출처 둘 이상으로 대조. 정답 변경 없음, 권고 1건 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
