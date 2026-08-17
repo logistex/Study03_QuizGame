@@ -1,0 +1,4 @@
+- [요청과 작업을 분리한다](note-request-work-separation.md) — 노트에 실릴 장면이라 논의 중에 앞질러 파일을 고치지 않는다
+- [산출물에 과정을 숨긴다](review-output-hides-process.md) — 학생이 재현할 수 없는 경로가 결과에 드러나면 안 된다
+- [요약은 개조식으로](summary-in-outline-style.md) — 마침표 없이, 노트에 바로 붙일 수 있게
+- [퀴즈 프로젝트 작업 규칙](quiz-project-working-rules.md) — 이어서 할 때 history의 인계 문서부터 읽는다
