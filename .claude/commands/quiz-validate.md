@@ -1,11 +1,11 @@
 ---
 description: 문제 데이터를 규격에 대고 검증한다
-argument-hint: "[카테고리] (생략하면 40문항 전체)"
+argument-hint: "[카테고리] (생략하면 전체)"
 ---
 
 <!-- 생성: 2026-08-17 17:26 KST -->
 
-`questions.js`의 문제를 검증한다. 대상 범위는 `$ARGUMENTS`이며, 비어 있으면 40문항 전체를 본다.
+`questions.js`의 문제를 검증한다. 대상 범위는 `$ARGUMENTS`이며, 비어 있으면 전체를 본다.
 카테고리는 `korean_history`, `science`, `geography`, `art_culture` 또는 한국사, 과학, 지리, 예술과 문화로 받는다.
 
 **검증 기준을 새로 만들지 않는다.** 기준은 `spec/PRD.md`, `spec/IMPL-PLAN.md`,
