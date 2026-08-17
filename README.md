@@ -41,6 +41,7 @@
 /            배포 산출물 네 개, README, CLAUDE.md
 spec/        현재 유효한 규격 (PRD, 구현 계획)
 history/     협의와 진행 기록 (번호순 = 시간순)
+consensus/   세 세션이 함께 결론을 내는 문서 (라운드순)
 archive/     개정 전 판본
 ```
 
