@@ -150,6 +150,7 @@ phase2/archive/  2차의 개정 전 판본
 ```
 spec/      PRD.md, IMPL-PLAN.md — 현행 규격
 history/   오간 문서, 번호순이 시간순
+consensus/ 세 세션이 함께 결론을 내는 문서, 라운드순. 규칙은 consensus/00-rules.md
 archive/   개정 전 판본 (PRD-v1~v3, README-v1~v3)
 doc/       교재 집필용 내부 문서 (gitignore)
 ```
