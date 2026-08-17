@@ -1,6 +1,6 @@
 ---
 description: history 폴더의 문서 목록을 보여준다
-argument-hint: [개수] 또는 [시작, 끝]
+argument-hint: "[개수] 또는 [시작, 끝]"
 ---
 
 <!-- 생성: 2026-08-17 14:15 KST -->
