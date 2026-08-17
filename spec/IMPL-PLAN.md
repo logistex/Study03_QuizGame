@@ -219,6 +219,30 @@ V8과 V9는 카테고리를 넘어 전체 범위에서 판정한다. 카테고�
 - **문제 텍스트와 해설에 선택지의 위치를 지칭하는 표현을 쓰지 않는다.** "위의 두 번째 보기", "첫 번째 항목"은 선택지를 섞는 순간 사실과 어긋난다(PRD 2.1절). 이 규칙은 검사 함수가 잡을 수 없다.
 - 해설은 한두 문장으로 **그 정답이 정답인 근거**를 쓴다. 문제를 되풀이하는 문장은 해설이 아니다.
 
+### 저장소 밖에서 검사 함수를 부를 때
+
+브라우저 콘솔 말고 **명령줄에서 검사 함수만 돌려야 할 때**가 있다. 커스텀 명령어가 그렇다.
+그 경로를 여기 정해 둔다. **정해 두지 않으면 부르는 쪽마다 다른 방법을 새로 만든다.**
+
+```bash
+node -e "
+const fs = require('fs'), vm = require('vm');
+const ctx = vm.createContext({ console, document: { addEventListener() {} } });
+vm.runInContext(fs.readFileSync('questions.js','utf8'), ctx);
+vm.runInContext(fs.readFileSync('script.js','utf8'), ctx);
+const errors = vm.runInContext('validateData()', ctx);
+console.log(errors.length ? errors.join('\n') : '위반 0건');
+"
+```
+
+- `script.js`는 브라우저용이다. 그냥 읽으면 마지막 줄의 `document.addEventListener`에서
+  `ReferenceError: document is not defined`가 난다. `export`도 없다
+- `vm.createContext`에 `document` 스텁을 주면 통과하고, 같은 컨텍스트에서 함수를 부를 수 있다
+- **행 번호나 줄 범위로 파일을 잘라 쓰지 않는다.** 함수가 옮겨지면 같이 틀린다
+- 이 줄은 저장소 뿌리에서 실행한다
+
+`script.js`의 로드 방식이나 마지막 줄이 바뀌면 이 줄도 함께 고친다.
+
 ### 검사 함수 검증 절차 (1.5)
 
 검사 함수가 실제로 위반을 잡는지 확인하지 않으면, 이후 40문제가 통과한 것이 "데이터가 맞다"는 뜻인지 "검사가 아무것도 안 한다"는 뜻인지 구별할 수 없다.
