@@ -181,7 +181,7 @@ const QUESTIONS = {
   geography: [
     {
       id: 'ge_01',
-      question: '우리나라에서 가장 큰 섬은 어디인가?',
+      question: '우리나라에서 면적이 가장 큰 섬은 어디인가?',
       options: ['거제도', '울릉도', '제주도', '강화도'],
       answer: 2,
       difficulty: 'easy',

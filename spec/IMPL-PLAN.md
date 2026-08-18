@@ -307,7 +307,7 @@ Object.values(QUESTIONS).flat()
 
 ```javascript
 Object.values(QUESTIONS).flat()
-  .filter(q => /\d{4}년|\d[\d,.]*(미터|제곱|%|배)/.test(q.explanation))
+  .filter(q => /\d{4}년|\d[\d,.]*\s*(만|억)?\s*(미터|제곱|%|배)/.test(q.explanation))
   .map(q => q.id + '  ' + q.explanation)
 ```
 
