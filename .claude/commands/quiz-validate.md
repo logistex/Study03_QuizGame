@@ -46,7 +46,7 @@ console.log(errors.length ? errors.join('\n') : '위반 0건');
 | `explanation`이 그 정답의 근거를 설명하는가. 문제를 되풀이하는 문장이 아닌가 | `spec/IMPL-PLAN.md` 1.8절 2번, `spec/PRD.md` 3.6절 필드 표 |
 | 문제 텍스트와 해설이 선택지 위치를 지칭하지 않는가 | `spec/PRD.md` 2.1절, `spec/IMPL-PLAN.md` 1.8절 3번 |
 | 정답이 하나로만 읽히는가. 오답 셋이 모두 명백한 오답인가 | `spec/PRD.md` 3.6절, `spec/IMPL-PLAN.md` 1.8절 4번 |
-| 최상급 표현에 재는 기준과 범위가 문제 텍스트에 있는가 | `spec/PRD.md` 3.6절, `spec/IMPL-PLAN.md` 1.8절 5번 |
+| 최상급 표현이 놓인 자리에 재는 기준과 범위가 함께 있는가 | `spec/PRD.md` 3.6절, `spec/IMPL-PLAN.md` 1.8절 5번 |
 | 시점에 따라 달라지는 수치에 기준 시점이 있는가 | `spec/PRD.md` 3.6절, `spec/IMPL-PLAN.md` 1.8절 6번 |
 | 해설의 연도, 수치, 인명을 출처 둘 이상으로 대조했는가 | `spec/IMPL-PLAN.md` 1.8절 7번 |
 | 문항끼리 같은 사실을 묻고 있지 않은가 | `spec/IMPL-PLAN.md` 1.8절 8번 |
@@ -62,8 +62,8 @@ const ctx = vm.createContext({ console, document: { addEventListener() {} } });
 vm.runInContext(fs.readFileSync('questions.js','utf8'), ctx);
 const qs = vm.runInContext('Object.values(QUESTIONS).flat()', ctx);
 console.log('== 최상급 표현 (1.8절 5번) ==');
-qs.filter(q => /가장|최초|최대|최고|유일/.test(q.question))
-  .forEach(q => console.log(q.id + '  ' + q.question));
+qs.filter(q => /가장|최초|최대|최고|유일/.test(q.question + q.explanation))
+  .forEach(q => console.log(q.id + '  ' + q.question + '  /  ' + q.explanation));
 console.log('== 시점 의존 수치 (1.8절 6번) ==');
 qs.filter(q => /\d{4}년|\d[\d,.]*\s*(만|억)?\s*(미터|제곱|%|배)/.test(q.explanation))
   .forEach(q => console.log(q.id + '  ' + q.explanation));
