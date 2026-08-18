@@ -185,7 +185,7 @@ const QUESTIONS = {
       options: ['거제도', '울릉도', '제주도', '강화도'],
       answer: 2,
       difficulty: 'easy',
-      explanation: '제주도는 면적이 약 1,833제곱킬로미터로 우리나라에서 가장 큰 섬이다.'
+      explanation: '제주도는 본섬 면적이 약 1,833제곱킬로미터로 우리나라에서 가장 큰 섬이다.'
     },
     {
       id: 'ge_02',
@@ -210,7 +210,7 @@ const QUESTIONS = {
       options: ['한강', '낙동강', '금강', '섬진강'],
       answer: 1,
       difficulty: 'medium',
-      explanation: '낙동강은 길이가 약 510킬로미터로 남한의 강 가운데 가장 길다.'
+      explanation: '낙동강은 유로연장이 약 510킬로미터로 남한의 강 가운데 가장 길다.'
     },
     {
       id: 'ge_05',
