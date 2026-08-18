@@ -12,7 +12,7 @@ const QUESTIONS = {
     {
       id: 'kh_01',
       question: '조선을 건국한 인물은 누구인가?',
-      options: ['이성계', '이방원', '정도전', '왕건'],
+      options: ['이성계', '이방원', '최영', '왕건'],
       answer: 0,
       difficulty: 'easy',
       explanation: '이성계는 1392년 고려를 무너뜨리고 조선을 세워 태조가 되었다.'
@@ -81,7 +81,7 @@ const QUESTIONS = {
       options: ['태종', '세조', '중종', '성종'],
       answer: 3,
       difficulty: 'hard',
-      explanation: '『경국대전』은 세조 때 편찬을 시작해 성종 때인 1485년부터 시행되었다.'
+      explanation: '『경국대전』은 세조 때 편찬을 시작해 성종 때 반포되어 1485년부터 시행되었다.'
     },
     {
       id: 'kh_10',
@@ -108,11 +108,11 @@ const QUESTIONS = {
       options: ['0도', '50도', '80도', '100도'],
       answer: 3,
       difficulty: 'easy',
-      explanation: '1기압에서 순수한 물은 섭씨 100도에서 끓어 수증기가 된다.'
+      explanation: '물은 100도에서 액체와 기체가 함께 있을 수 있고, 이 온도가 1기압에서의 끓는점이다.'
     },
     {
       id: 'sc_03',
-      question: '태양계에서 가장 큰 행성은 무엇인가?',
+      question: '태양계에서 지름이 가장 큰 행성은 무엇인가?',
       options: ['목성', '토성', '천왕성', '지구'],
       answer: 0,
       difficulty: 'easy',
@@ -128,15 +128,15 @@ const QUESTIONS = {
     },
     {
       id: 'sc_05',
-      question: '소리가 가장 빠르게 전달되는 물질의 상태는 무엇인가?',
+      question: '일반적으로 소리가 가장 빠르게 전달되는 물질의 상태는 무엇인가?',
       options: ['고체', '액체', '기체', '진공'],
       answer: 0,
       difficulty: 'medium',
-      explanation: '소리는 입자가 촘촘히 붙어 있을수록 빠르게 전달되므로 고체에서 가장 빠르다.'
+      explanation: '소리는 대체로 고체에서 가장 빠르고 기체에서 가장 느리며, 진공에서는 전달되지 않는다.'
     },
     {
       id: 'sc_06',
-      question: '공기 중에 가장 많이 들어 있는 기체는 무엇인가?',
+      question: '공기 중에 부피 기준으로 가장 많이 들어 있는 기체는 무엇인가?',
       options: ['산소', '질소', '이산화 탄소', '수소'],
       answer: 1,
       difficulty: 'medium',
@@ -279,7 +279,7 @@ const QUESTIONS = {
       options: ['빈센트 반 고흐', '폴 고갱', '폴 세잔', '에드가 드가'],
       answer: 0,
       difficulty: 'easy',
-      explanation: '반 고흐는 프랑스 아를에 머물던 1888년 무렵부터 「해바라기」 연작을 그렸다.'
+      explanation: '반 고흐는 파리에서 1887년에 그리기 시작해 아를에서 화병에 꽂힌 「해바라기」 연작을 남겼다.'
     },
     {
       id: 'ac_03',
@@ -311,7 +311,7 @@ const QUESTIONS = {
       options: ['승정원일기', '조선왕조실록', '직지심체요절', '동의보감'],
       answer: 1,
       difficulty: 'medium',
-      explanation: '『조선왕조실록』은 태조부터 철종까지 472년의 역사를 연월일 순으로 적은 기록이다.'
+      explanation: '사관이 매일 적은 사초를 왕이 죽은 뒤 모아 엮었으며, 유네스코 세계기록유산이다.'
     },
     {
       id: 'ac_07',
