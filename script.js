@@ -52,7 +52,7 @@ function validateData() {
       return;
     }
     if (list.length < QUIZ_LENGTH) {
-      errors.push(category.id + ': 문제 수가 ' + list.length + ', ' + QUIZ_LENGTH + ' 이상이어야 합니다');
+      errors.push(category.id + ': 문제 수가 ' + list.length + '입니다. ' + QUIZ_LENGTH + ' 이상이어야 합니다');
     }
 
     list.forEach(function (q, i) {
