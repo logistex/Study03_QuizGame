@@ -344,6 +344,7 @@ QUESTIONS.korean_history.map(q => q.id + '  ' + q.question)
 **카테고리별 분포 확인**
 
 `answer` 분포와 난이도 배분은 콘솔에서 세는 편이 빠르다. 확인만 하고 코드에 남기지 않는다.
+2차에서는 `/quiz-stats` 명령어가 이 자리를 가져갔다(PRD 3.6절 확인 수단 표). 아래 두 줄은 1단계 당시의 방법이다.
 
 ```javascript
 QUESTIONS.korean_history.map(q => q.answer).sort()
