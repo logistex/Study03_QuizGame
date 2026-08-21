@@ -116,7 +116,7 @@ const QUESTIONS = {
     },
     {
       id: 'kh_14',
-      question: '1897년 고종이 환구단에서 황제에 오르며 정한 나라 이름은?',
+      question: '1897년 고종이 황제에 오르며 정한 나라 이름은?',
       options: ['조선', '대한민국', '대한제국', '고려'],
       answer: 2,
       difficulty: 'medium',
