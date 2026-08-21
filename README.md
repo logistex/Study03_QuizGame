@@ -95,6 +95,7 @@ archive/     개정 전 판본
 | [33 문제 출처 교차 검증](history/33-question-source-verification.md) | 40문항을 외부 출처 둘 이상으로 대조. 정답 변경 없음, 권고 1건 |
 | [42 한국사 추가 5문항 검토](history/42-kh-additions-review.md) | 필수 1건. kh_14 해설의 연호 제정 시점 |
 | [43 한국사 추가 5문항 검토 회신](history/43-kh-add-review-reply.md) | 지적 1건 반영. 대조 단위를 사실로, 두 세션이 함께 틀린 자리 |
+| [44 kh_14 재대조](history/44-kh14-recheck.md) | 새 문장은 통과. 권고 2건, 고치면서 어긋난 주변 |
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
