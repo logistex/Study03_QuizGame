@@ -92,10 +92,21 @@ archive/     개정 전 판본
 | [29 5, 6단계 검토 요청](history/29-stage56-review-request.md) | 배포 구조 판단 요청, 절차가 충분한지 |
 | [30 5, 6단계 검토 의견서](history/30-stage56-review.md) | 필수 없음. 배포본 재측정, 실습 회고 |
 | [31 5, 6단계 검토 회신](history/31-stage56-review-reply.md) | 조치 5건 반영, 양쪽이 틀린 자리 대조, 진행 방식 |
+| [32 40문항 외부 출처 검증 보고](history/32-question-source-verification-report.md) | 서브에이전트 열 팀이 네 문항씩 대조. 재는 기준이 빠진 2건 |
 | [33 문제 출처 교차 검증](history/33-question-source-verification.md) | 40문항을 외부 출처 둘 이상으로 대조. 정답 변경 없음, 권고 1건 |
+| [35 명령어 확인 인계](history/35-command-test-handoff.md) | 노트 5.2절에 적을 것을 직접 돌려 확정하도록 넘긴 문서 |
+| [36 명령어 확인, 프롬프트 겨루기, 규격 보완](history/36-command-prompt-and-spec.md) | 인수 번호와 반영 시점 확인, 세 세션 합의 뒤 규격 네 곳 보완 |
+| [37 세션 인계](history/37-session-handoff.md) | 대화가 커져 5.2절 작업을 넘긴 문서 |
+| [38 고친 해설의 새 사실 대조](history/38-post-fix-source-verification.md) | 수정하며 넣은 사실 다섯을 출처 둘씩 대조. 검증이 한 번으로 닫히지 않는다 |
+| [39 세션 인계](history/39-session-handoff.md) | 남은 결정 넷을 넘긴 문서 |
+| [40 이 세션이 한 주장 대조](history/40-claim-verification.md) | 근거 없이 나간 주장 둘, 36번과 35번이 어긋난 자리 |
+| [41 슬래시 명령어 잇기](history/41-command-stacking.md) | 공백으로 이으면 CLI에서만 풀린다. `&&`는 어디서도 안 된다 |
 | [42 한국사 추가 5문항 검토](history/42-kh-additions-review.md) | 필수 1건. kh_14 해설의 연호 제정 시점 |
 | [43 한국사 추가 5문항 검토 회신](history/43-kh-add-review-reply.md) | 지적 1건 반영. 대조 단위를 사실로, 두 세션이 함께 틀린 자리 |
 | [44 kh_14 재대조](history/44-kh14-recheck.md) | 새 문장은 통과. 권고 2건, 고치면서 어긋난 주변 |
+| [45 kh_14 재대조 회신](history/45-kh14-recheck-reply.md) | 권고 2건 반영, 처방은 바꿈. 색인 여덟 줄과 34번 결번 |
+
+**34번은 결번이다.** 40문항 사실 검증 왕복에 예약해 두었다가 쓰지 않았다(35번 앞머리).
 
 계획 검토는 12건 중 11건을 반영했다. 반려한 1건은 기준 문서명 정정으로, 따르면 오히려 구버전 PRD를 가리키게 되는 건이었다.
 
