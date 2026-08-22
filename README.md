@@ -116,6 +116,7 @@ archive/     개정 전 판본
 | [54 지리와 예술과 문화 1차 판정](history/54-ge-ac-review.md) | 열 문항을 규격에 대어 봄. 필수 0건, 권고 1건 — ac_15의 근거 주석 |
 | [55 2차 구현 설계 결정](history/impl_v2/55-phase2-design-decisions.md) | 인증과 저장은 Supabase, 배포는 Vercel, 채점은 서버로. 5장의 경계를 닫음 |
 | [56 PRD 2차 개정](history/impl_v2/56-prd-phase2-revision.md) | 개정 요청 프롬프트를 설계하고 실행. 여섯 절을 고치고 다섯 절을 신설 |
+| [57 PRD 2차 개정 검토](history/impl_v2/57-prd-phase2-review.md) | 필수 6건, 권고 5건. 근거 문서가 같은 커밋에서 고쳐진 것과 계획서의 끊긴 참조 |
 
 **34번은 결번이다.** 40문항 사실 검증 왕복에 예약해 두었다가 쓰지 않았다(35번 앞머리).
 
