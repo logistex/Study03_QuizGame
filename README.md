@@ -114,6 +114,7 @@ archive/     개정 전 판본
 | [52 세션 인계](history/52-session-handoff.md) | 5.2절 마무리와 5.3 착수를 넘김. 남은 일 셋과 결정 셋 |
 | [53 지리와 예술과 문화 추가](history/53-ge-ac-additions.md) | quiz-add에 커밋과 푸시를 붙이고 다섯씩 더해 60문항. 시점에 기댄 문항 둘을 바꿈 |
 | [54 지리와 예술과 문화 1차 판정](history/54-ge-ac-review.md) | 열 문항을 규격에 대어 봄. 필수 0건, 권고 1건 — ac_15의 근거 주석 |
+| [55 2차 구현 설계 결정](history/impl_v2/55-phase2-design-decisions.md) | 인증과 저장은 Supabase, 배포는 Vercel, 채점은 서버로. 5장의 경계를 닫음 |
 
 **34번은 결번이다.** 40문항 사실 검증 왕복에 예약해 두었다가 쓰지 않았다(35번 앞머리).
 
