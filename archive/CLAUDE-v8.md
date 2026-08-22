@@ -1,3 +1,5 @@
+<!-- 보존: 2026-08-22 21:48 KST. gh-pages 재생성 명령이 main을 참조하던 판. 2차 소스를 main에 두기로 정하기 직전 시점. 현재 문서는 저장소 뿌리의 CLAUDE.md -->
+
 <!-- 생성: 2026-08-16 11:38 KST -->
 
 # 이 저장소에서 일하는 방법
@@ -128,11 +130,9 @@ gh-pages/
 
 태그가 바뀌면 그 폴더만 다시 만든다. `git archive`가 태그 시점의 파일을 그대로 꺼내므로 워크트리를 만들 필요가 없다.
 
-**뿌리의 최후본도 `main`이 아니라 `stage6-final`에서 꺼낸다.** 2차 구현의 소스 코드가 `main`에 올라가는데, 2차 앱은 서버 함수가 있어야 동작하므로 `gh-pages`에 올리면 깨진다. `main`에서 꺼내면 1차 배포 자리에 동작하지 않는 앱이 올라간다.
-
 ```bash
 git worktree add --detach /tmp/ghp && cd /tmp/ghp && git checkout gh-pages
-git archive stage6-final index.html style.css script.js questions.js | tar -x
+git archive main index.html style.css script.js questions.js | tar -x
 for t in stage1-final stage2 stage3-final stage4-final stage5-final; do
   mkdir -p "$t" && git archive "$t" index.html style.css script.js questions.js | tar -x -C "$t"
 done
@@ -174,7 +174,6 @@ archive/            개정 전 판본. 1차와 나누지 않는다
 | `CLAUDE-v5.md` | 판정 두 번을 서로 다른 세션이 하도록 조이기 직전 시점 |
 | `CLAUDE-v6.md` | 대조 단위와 세션 식별을 규격에 넣기 직전 시점 |
 | `CLAUDE-v7.md` | 2차 문서 폴더를 `history/impl_v2/`로 정하기 직전 시점 |
-| `CLAUDE-v8.md` | `gh-pages` 재생성 명령이 `main`을 참조하던 시점. 2차 소스를 `main`에 두기로 정하기 직전 |
 
 ## 저장소 구조와 태그
 
