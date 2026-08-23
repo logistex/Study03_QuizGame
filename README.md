@@ -120,6 +120,8 @@ archive/     개정 전 판본
 | [58 검토 회신](history/impl_v2/58-prd-review-reply.md) | 열한 건을 모두 반영. R3만 처방을 바꿈. 프롬프트에 찾는 방법을 넣음 |
 | [59 PRD 개정 왕복 종결](history/impl_v2/59-prd-review-close.md) | 양쪽이 닫는 데 합의. 선 아래 둘을 적음. 문항과 규격은 결함의 종류가 다름 |
 | [60 세션 인계](history/impl_v2/60-session-handoff.md) | 2차 착수와 PRD 개정까지 넘김. 남은 일과 순서를 지켜야 하는 것 셋 |
+| [61 지리와 예술과 문화 2차 판정](history/61-ge-ac-review-round2.md) | 열 문항을 다시 규격에 대어 봄. 필수 0건, 권고 1건 — ge_14의 북쪽 끝 |
+| [62 PRD 2차 개정 2차 판정](history/impl_v2/62-prd-phase2-review-round2.md) | 필수 2건, 권고 6건. 이름 없는 변경은 식별자 검색에 안 걸림 |
 | [57 PRD 2차 개정 검토](history/impl_v2/57-prd-phase2-review.md) | 필수 6건, 권고 5건. 근거 문서가 같은 커밋에서 고쳐진 것과 계획서의 끊긴 참조 |
 
 **34번은 결번이다.** 40문항 사실 검증 왕복에 예약해 두었다가 쓰지 않았다(35번 앞머리).
