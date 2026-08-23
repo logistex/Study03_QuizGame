@@ -341,6 +341,8 @@ Object.values(QUESTIONS).flat()
 
 자료가 갈리면 주류 학설을 따른다. 작성자와 검토자가 같은 오해를 공유하면 기억에만 기대는 검토는 그대로 통과한다.
 
+**주석이 서술하는 것과 `question`, `explanation`이 실제로 담은 것이 맞는지 함께 확인한다.** 어긋나면 다음 라운드가 주석을 믿고 그 자리를 안 본다. `ac_15`가 그 자리였다 — 주석은 소란의 원인을 쓰지 않았다고 적었는데 해설에는 적혀 있었다(54번 6절).
+
 **8. 문항끼리 같은 사실을 묻고 있지 않은가**
 
 검사 함수는 `question` 텍스트 중복만 잡으므로 "조선을 건국한 인물은?"과 "1392년 조선을 세운 사람은?"은 둘 다 통과한다. 카테고리별로 문제 목록을 훑어 같은 사실을 두 번 묻는지 본다.
@@ -348,6 +350,19 @@ Object.values(QUESTIONS).flat()
 ```javascript
 QUESTIONS.korean_history.map(q => q.id + '  ' + q.question)
 ```
+
+**한 문항의 정답이 다른 문항의 오답 선택지로 쓰인 자리도 함께 뽑는다.** 위 목록으로는 안 보인다. 먼저 만난 문항이 다음 문항의 답을 알려 주는 자리이며, **위반이 아닌 것이 보통이므로 뽑아만 주고 판정하지 않는다.**
+
+```javascript
+Object.entries(QUESTIONS).forEach(([cat, qs]) => {
+  const ans = new Map(qs.map(q => [q.options[q.answer], q.id]));
+  qs.forEach(q => q.options.forEach((o, i) => {
+    if (i !== q.answer && ans.has(o)) console.log(cat + ': ' + o + ' — 정답 ' + ans.get(o) + ' / 오답 ' + q.id);
+  }));
+});
+```
+
+**표기가 다르면 이 검사가 못 잡는다.** `ac_10`은 "스트라빈스키", `ac_15`는 "이고르 스트라빈스키"로 적어 문자열이 어긋난다. 인명은 성만 떼어 한 번 더 대조한다.
 
 **카테고리별 분포 확인**
 
