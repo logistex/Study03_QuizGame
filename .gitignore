@@ -11,3 +11,6 @@ PRD 검토 가상본
 # 커스텀 명령어와 스킬은 남긴다. 수정 이력이 문서로 기록되어야 한다
 !.claude/commands/
 !.claude/skills/
+
+# 화면 캡처 원본 — 계정 정보와 키가 그대로 보임
+capture/raw/
