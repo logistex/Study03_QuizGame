@@ -198,6 +198,7 @@ archive/            개정 전 판본. 1차와 나누지 않는다
 | 사본 | 원본 | 어느 시점 |
 |---|---|---|
 | `CLAUDE-global.md` ~ `-v5.md` | `~/.claude/CLAUDE.md` | v3은 지시 정확성 규칙 직전, v4는 문체 규정 직전, **v5가 현재 판** |
+| `skills/lecture-note.md` | `~/.claude/skills/lecture-note/SKILL.md` | 2026-08-30 전역으로 옮긴 시점의 현재 판 |
 | `STYLE-v1.md`, `-v2.md` | `~/.claude/STYLE.md` | v1은 규칙 다섯 직전, **v2가 현재 판** |
 
 **뒤엣것은 「고치기 전 판」이 아니라 「현재 판」을 남긴다.** 저장소 밖 파일은 고친 뒤에야 사본을 뜰 수 있는 회차가 생기므로, 현재 판을 두고 다음 수정 때 그것을 직전 판으로 삼는다.
