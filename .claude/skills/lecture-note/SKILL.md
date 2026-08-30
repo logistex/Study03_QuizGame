@@ -119,13 +119,40 @@ argument-hint: "[write|check|fix] [노션 페이지 id 또는 파일 경로] [�
 python3 - "$F" <<'PY'
 import sys, re, collections
 s = open(sys.argv[1]).read().replace('\\n', '\n').replace('\\t', '\t')
-print('본문 긴 줄', len([l for l in s.split('\n') if '—' in l and '<summary>' not in l]))
-print('제목 긴 줄', len([t for t in re.findall(r'<summary>(.{0,90}?)</summary>', s) if '—' in t]))
-print('단계 표기', dict(collections.Counter(re.findall(r'구현 [1-6]단계|(?<!구현 )(?<![0-9])[1-6]단계', s))))
-print('굵게', s.count('**'))
-print('토글 균형', s.count('<details>'), s.count('</details>'))
+
+# 원문 보존 구역을 먼저 뺀다. 코드 블록과 인용문은 검사 대상이 아니다.
+body = re.sub(r'```.*?```', '', s, flags=re.S)
+body = '\n'.join(l for l in body.split('\n') if not l.strip().startswith('>'))
+
+print('본문 긴 줄', len([l for l in body.split('\n') if '—' in l and '<summary>' not in l]))
+print('제목 긴 줄', len([t for t in re.findall(r'<summary>(.{0,90}?)</summary>', body) if '—' in t]))
+print('맨 N단계', sum(v for k, v in collections.Counter(
+    re.findall(r'구현 [1-6]단계|(?<!구현 )(?<![0-9])[1-6]단계', body)).items() if not k.startswith('구현')))
+print('셈 단위', len(re.findall(r'(둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열|열한|열두)[ ]?(자리|곳)', body)))
+print('서술형', len(re.findall(r'(한다|이다|된다)[.\n]', body)))
+bold = [l for l in body.split('\n') if re.search(r'\*\*[^*\s].*?\*\*', l)
+        and '*****' not in l and 'vercel.app' not in l]
+print('굵게', len(bold), '줄')
+print('가운뎃점', body.count('·'))
+print('토글 균형', s.count('<details>'), s.count('</details>'))   # 구조는 전문으로 센다
 PY
 ```
+
+
+**원문 보존 구역을 먼저 뺀다.** 검사를 걸지 않는 자리가 셋이다.
+
+| 구역 | 왜 |
+|---|---|
+| 코드 블록 | 실행 당시 프롬프트 원문이다. 고치면 기록이 아니게 된다 |
+| 인용문 `> ` | 클로드에게 준 지시다. 서술체가 맞다 |
+| 마스킹된 값 `sb_secret_****` | 별표가 굵게로 잡힌다 |
+| 와일드카드 주소 | `/**`의 별표가 굵게로 잡힌다 |
+
+**이 셋을 빼지 않으면 위반 수가 부풀려진다.** 5장 C 노트에서 굵게 83건이 잡혔으나 빼고 보니 실제 위반은 0건이었다.
+
+**굵게는 별표 개수가 아니라 줄 수로 센다.** 개수로 세면 마스킹 한 줄이 40건으로 잡힌다.
+
+**토글 쌍만은 전문으로 센다.** 구조는 보존 구역 안팎을 가리지 않는다.
 
 **검사 여섯을 밟는다.**
 
